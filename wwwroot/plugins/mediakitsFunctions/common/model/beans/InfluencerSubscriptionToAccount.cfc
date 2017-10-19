@@ -18,7 +18,7 @@ component
 	property name="transactionid" datatype="varchar" length="1000" default="";
 	property name="datecreated" datatype="datetime" nullable=true;
 	property name="datemodified" datatype="datetime" nullable=true;
-	property name="fieldsToBeUpdatedByStruct" datatype="varchar" length="1000" default="discountPercent,discountDuration,discountStart,subscriptionStart,isActive,transactionid" ;
+	property name="fieldsToBeUpdatedByStruct" datatype="varchar" persistent="false" length="1000" default="discountPercent,discountDuration,discountStart,subscriptionStart,isActive,transactionid" ;
 
 	// foreign key (pre-defined bean by Mura)
 	property name="site" cfc="site" fieldtype="many-to-one" fkcolumn="siteid";

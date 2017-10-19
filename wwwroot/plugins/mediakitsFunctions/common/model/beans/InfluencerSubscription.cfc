@@ -20,7 +20,7 @@ component
 	property name="isOffered" datatype="boolean" default=1;
 	property name="paymentGateway" datatype="varchar" length="1000" default="";
 	property name="transactionid" datatype="varchar" length="1000" default="";
-	property name="fieldsToBeUpdatedByStruct" datatype="varchar" length="1000" default="name,level,description,sort_order,duration,cost,isActive,isOffered,state,zipcode,country" ;
+	property name="fieldsToBeUpdatedByStruct" datatype="varchar" length="1000" persistent="false" default="name,level,description,sort_order,duration,cost,isActive,isOffered,state,zipcode,country" ;
 
 	// foreign key (pre-defined bean by Mura)
 	property name="site" cfc="site" fieldtype="many-to-one" fkcolumn="siteid";
