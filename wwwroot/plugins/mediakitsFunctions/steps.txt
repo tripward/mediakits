@@ -1,0 +1,11 @@
+
+
+
+id edit links per section
+javascript file - list of functions
+when clicked
+	validate
+	ajax call to plugin
+		return those valuse back
+	update the local.influenter
+redisplay - can we just update the fields values???
