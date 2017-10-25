@@ -111,7 +111,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 	<input type="submit" name="submit" value="submit" />
 </form>
 
-<script>
+<!---<script>
 m(function(){
     m.loader()
         .loadcss("#$.siteConfig('themeAssetPath')#/display_objects/myobject/assets/css/mycss.css",{media:'all'})
@@ -124,5 +124,5 @@ m(function(){
             }
         );
 })
-</script>
+</script>--->
 </cfoutput>

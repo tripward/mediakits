@@ -5,6 +5,7 @@
 <cfoutput>
 <!--- method="post" enctype="multipart/form-data"--->
 <form action="/login/?mediakitsFunctionsaction=influencer:main.doLogin" role="form">
+	<input type="hidden" name="mediakitsFunctionsaction" value="main.doLogin">
 	<div>
 		<label for=”field”>Username</label>
 		<input id=”firstname” type="text" name="username" value="" /> 

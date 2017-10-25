@@ -39,7 +39,9 @@ component persistent="false" accessors="true" output="false" extends="controller
 	}
 	
 	public void function doLogin(required struct rc) {
-		WriteDump(var=argumentCollection,abort=true);
+		/*WriteDump(var=argumentCollection,abort=true);*/
+		location("/trips-test-page/", false, '302');abort;
+		
 		
 		if (!len(rc.username)) {
 			arrayAppend(rc.errors,'Username is required');

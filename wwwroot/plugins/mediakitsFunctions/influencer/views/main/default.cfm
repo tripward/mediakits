@@ -50,7 +50,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 						<a href="#buildURL(action='app3:main.form&id=#local.id#')#">#local.id#</a>
 					</td>
 					<td>
-						<a href="#buildURL(action='app3:main.form&id=#local.id#')#">#rc.$.esapiEncode('html', local.registration.getFName())# #rc.$.esapiEncode('html', local.registration.getLName())#</a>
+						<a href="#buildURL(action='app3:main.form&id=#local.id#')#">#local.registration.getFName()# #local.registration.getLName()#</a>
 					</td>
 					<td>
 						<a href="#buildURL(action='app3:main.delete&id=#local.id#')#">[ X ]</a>

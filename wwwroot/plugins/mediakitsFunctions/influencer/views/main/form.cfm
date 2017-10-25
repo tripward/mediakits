@@ -21,14 +21,14 @@ http://www.apache.org/licenses/LICENSE-2.0
 			<form role="form" method="post">
 				<div class="form-group">
 					<label for="fname">First Name</label>
-					<input type="text" class="form-control" name="fname" value="#rc.$.esapiEncode('html_attr', local.registration.getFName())#" />
+					<input type="text" class="form-control" name="fname" value="#local.newInfluencerAccount.getFName()#" />
 				</div>
 				<div class="form-group">
 					<label for="lname">Last Name</label>
-					<input type="text" class="form-control" name="lname" value="#rc.$.esapiEncode('html_attr', local.registration.getLName())#" />
+					<input type="text" class="form-control" name="lname" value="#local.newInfluencerAccount.getLName()#" />
 				</div>
 				<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('app3:main.save')#" />
-				<input type="hidden" name="id" value="#local.registration.getID()#" />
+				<input type="hidden" name="id" value="#local.newInfluencerAccount.getID()#" />
 				<button type="submit" class="btn btn-default" value="Save Registration">Submit</button>
 			</form>
 		</div>

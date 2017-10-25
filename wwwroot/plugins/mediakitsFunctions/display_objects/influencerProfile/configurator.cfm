@@ -31,5 +31,5 @@
   </div>
 
   <input type="hidden" name="configuredDTS" class="objectParam" value="#Now()#" />
-  <input type="hidden" name="configuredBy" class="objectParam" value="#rc.$.esapiEncode('html_attr', m.currentUser('LName'))#, #rc.$.esapiEncode('html_attr', m.currentUser('FName'))#" />
+  <input type="hidden" name="configuredBy" class="objectParam" value="#m.currentUser('LName')#, #m.currentUser('FName')#" />
 </cfoutput>

@@ -17,11 +17,11 @@
 					<!---#m.dspObject(object="influencerSubscribeForm", objectparams={async='false', render='server'})#--->
 					
 					start of body
-					<!---#$.dspBody(body=$.content('body')
+					#$.dspBody(body=$.content('body')
 						, pageTitle=pageTitle
 						, crumbList=false
 						, showMetaImage=false
-					)#--->
+					)#
 					end of body
 					start of dspObject(1)
 					#$.dspObjects(1)#
