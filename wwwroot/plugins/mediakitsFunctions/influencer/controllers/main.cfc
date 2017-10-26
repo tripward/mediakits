@@ -26,7 +26,9 @@ component persistent="false" accessors="true" output="false" extends="controller
 	
 	public void function default(required struct rc) {
 		param name='rc.message' default='';
-		rc.registrations = variables.registrationService.list();
+		/*rc.registrations = variables.registrationService.list();*/
+		/*message = "funning";*/
+		/*variables.fw.redirect(action='influencer:main.justfun', preserve='message');*/
 	}
 
 	public void function form(required struct rc) {
@@ -40,10 +42,12 @@ component persistent="false" accessors="true" output="false" extends="controller
 	
 	public void function doLogin(required struct rc) {
 		/*WriteDump(var=argumentCollection,abort=true);*/
-		location("/trips-test-page/", false, '302');abort;
+		/*location("/trips-test-page/", false, '302');abort;*/
+		message = "funning";
+		variables.fw.redirect(action='influencer:main.justfun', preserve='message');
 		
 		
-		if (!len(rc.username)) {
+		/*if (!len(rc.username)) {
 			arrayAppend(rc.errors,'Username is required');
 		}
 		
@@ -58,7 +62,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 			rc.influencerAccount = getBean('InfluencerAccount').loadBy(username=rc.username,password=rc.hashedPassword);
 		}
 		
-		WriteDump(var=rc.influencerAccount,top=3,abort=true);
+		WriteDump(var=rc.influencerAccount,top=3,abort=true);*/
 		
 		
 	}
@@ -66,6 +70,13 @@ component persistent="false" accessors="true" output="false" extends="controller
 	public void function getSubScribeForm(required struct rc) {
 		rc.availableSubscriptions = variables.InfluencerSubscriptionService.getIterator().getArray();
 		rc.newInfluencerAccount = variables.influencerAccountService.new();
+	}
+	
+	public void function justfun(required struct rc) {
+		/*WriteDump(var=session,top=2,abort=true);*/
+		
+
+
 	}
 	
 	public void function getProfile(required struct rc) {

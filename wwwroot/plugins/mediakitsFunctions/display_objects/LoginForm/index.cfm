@@ -10,14 +10,5 @@
 */
 
 include '../../config.fw1.cfm';
-/*try {
-	WriteDump(url);
-	WriteDump(objectParams);
-	WriteDump(form);
-	WriteDump($);
-	WriteDump(arguments);abort;}
-catch (any e) {
-			WriteDump(e);abort;
-		} */
 WriteOutput( CreateObject( "#variables.framework.package#.Application" ).init( variables.framework ).doAction( 'influencer:main.getLoginForm' ) );
 </cfscript>

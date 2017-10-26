@@ -1,11 +1,33 @@
 <cfsilent>
 
 </cfsilent>
-
+<cfdump var="#getFullyQualifiedAction('influencer:main.doLogin')#" label="cgi" abort="false" top="3" />
+<cfdump var="#variables.framework.action#" label="cgi" abort="false" top="3" />
 <cfoutput>
+	
+	
+	<div class="row">
+		<div class="col-md-6">
+			<h4>login</h4>
+			<form role="form" method="post">
+				<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.doLogin')#" />
+				<div class="form-group">
+					<label for="Username">Username</label>
+					<input id="Username" class="form-control" type="text" name="Username" value="" /><!--- --->
+				</div>
+				<div class="form-group">
+					<label for="password">password</label>
+					<input id="password" class="form-control" type="text" name="password" value="" /><!--- --->
+				</div>
+				
+				<button type="submit" class="btn btn-default" value="Save Registration">Submit</button>
+			</form>
+		</div>
+	</div>
+	
 <!--- method="post" enctype="multipart/form-data"--->
-<form action="/login/?mediakitsFunctionsaction=influencer:main.doLogin" role="form">
-	<input type="hidden" name="mediakitsFunctionsaction" value="main.doLogin">
+<!---<form role="form" method="post">
+	<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.doLogin')#" />
 	<div>
 		<label for=”field”>Username</label>
 		<input id=”firstname” type="text" name="username" value="" /> 
@@ -15,8 +37,9 @@
 		<input id=”password” type="password" name="password" value="" /> 
 	</div>
 	<!---<input type="reset" name="reset" value="reset" />--->
-	<input type="submit" name="submit" value="submit" />
-</form>
+	<!---<input type="submit" name="submit" value="submit" />--->
+	<button type="submit" class="btn btn-default" value="Save Registration">Submit</button>
+</form>--->
 
 <!---<script>
 m(function(){
