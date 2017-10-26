@@ -41,28 +41,29 @@ component persistent="false" accessors="true" output="false" extends="controller
 	}
 	
 	public void function doLogin(required struct rc) {
-		/*WriteDump(var=argumentCollection,abort=true);*/
-		/*location("/trips-test-page/", false, '302');abort;*/
-		message = "funning";
-		variables.fw.redirect(action='influencer:main.justfun', preserve='message');
 		
+		/*message = "funning";
+		variables.fw.redirect(action='influencer:main.justfun', preserve='message');*/
 		
-		/*if (!len(rc.username)) {
-			arrayAppend(rc.errors,'Username is required');
+		if (!len(rc.username)) {
+			arrayAppend(rc.message,'Username is required');
+		}
+		
+		if (!len(rc.hashedPassword)) {
+			arrayAppend(rc.message,'password is required');
+		}
+		
+		if (arrayLen(rc.message)) {
+			variables.fw.redirect(action='influencer:main.getLoginForm', preserve='message');
+			abort;
 		}
 		
 		rc.hashedPassword = application.su.hashThis(rc.password);
 		
-		if (!len(rc.hashedPassword)) {
-			arrayAppend(rc.errors,'password is required');
-		}
-		
-		
-		if (!arrayLen(rc.errors)) {
-			rc.influencerAccount = getBean('InfluencerAccount').loadBy(username=rc.username,password=rc.hashedPassword);
-		}
-		
-		WriteDump(var=rc.influencerAccount,top=3,abort=true);*/
+		rc.influencerAccount = getBean('InfluencerAccount').loadBy(emailaddress=rc.username,password=rc.password);
+		/*variables.fw.redirect(action='influencer:main.influentcerProfile', preserve='message', queryString='');*/
+		location("/infuencer-profile/?InfuencerAccount=#rc.influencerAccount.getID()#", false, '302');
+		abort;
 		
 		
 	}

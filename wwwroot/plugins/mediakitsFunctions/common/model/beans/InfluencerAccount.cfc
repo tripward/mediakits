@@ -13,6 +13,7 @@ component
 	property name="firstname" datatype="varchar" length="255" required=true message="First Name is required." default="";
 	property name="lastname" datatype="varchar" length="255" required=true message="Last Name is required." default="";
 	property name="email" datatype="varchar" length="255" required=true message="Email is required." default="";
+	property name="password" datatype="varchar" length="255" required=true message="password is required." default="";
 	property name="datecreated" datatype="datetime" nullable=true;
 	property name="datemodified" datatype="datetime" nullable=true;
 	property name="isActive" datatype="boolean" default=1;
