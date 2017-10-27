@@ -1,14 +1,14 @@
-<cfdump var="#rc.influencerAccount#" label="cgi" abort="true" top="3" />
+<!---<cfdump var="#rc.influencerAccount#" label="cgi" abort="true" top="3" />--->
 <cfsilent>
 
-	<cfscript>
+	<!---<cfscript>
 		local.newInfluencerAccount = rc.newInfluencerAccount;
-	</cfscript>
+	</cfscript>--->
 	
 </cfsilent>
 
 <cfoutput>
 	
-
+this is the profile 
 
 </cfoutput>

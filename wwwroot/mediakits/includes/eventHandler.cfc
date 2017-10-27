@@ -151,8 +151,8 @@ include '/mediakits_env/mappings.cfm';
 	<cffunction name="onSiteError" access="public" output="true" returntype="any">
 		<cfargument name="$" hint="mura scope" />
 		
-<cfdump var="#arguments#" label="cgi" abort="false" top="3" />
-<cfdump var="#arguments.$.event('exception')#" label="cgi" abort="true" top="3" />
+<cfdump var="#arguments#" label="arguments in onsite error" abort="false" top="3" />
+<cfdump var="#arguments.$.event('exception')#" label="arguments in onsite error" abort="true" top="3" />
 		
 		
 		<cfif request.isShowErrorDebugging>

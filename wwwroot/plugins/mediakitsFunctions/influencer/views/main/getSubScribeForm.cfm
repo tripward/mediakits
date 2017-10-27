@@ -37,14 +37,14 @@ http://www.apache.org/licenses/LICENSE-2.0
 <!---<cfparam name="objectparams._p" default="1" >
 
 <cfset objectParams.async = "false"/>--->
+<cfinclude template="/plugins/mediakitsFunctions/common/includes/messages.cfm" >
 
-
-	<form action="/index.cfm/influencer-subscribe/?mediakitsFunctionsaction=influencer:main.doSubscribe" role="form" method="post" enctype="multipart/form-data">
+	<form action="/influencer-subscriber-form/?mediakitsFunctionsaction=influencer:main.doSubscribe" role="form" method="post" enctype="multipart/form-data">
 	
-	<div>
+	<!---<div>
 		<label for=”field”>Username</label>
 		<input id=”firstname” type="text" name="username" value="#rc.$.esapiEncode('html_attr', application.SU.decryptThis(local.newInfluencerAccount.getusername()))#" /> 
-	</div>
+	</div>--->
 	
 	<div>
 		<label for=”field”>Password</label>

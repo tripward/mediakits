@@ -1618,6 +1618,8 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			} else {
 				if(len($.event('contenthistid'))){
 					var entity=$.getBean('content').loadBy(contenthistid=$.event('contenthistid'));
+				} else if(len($.event('contentid'))){
+					var entity=$.getBean('content').loadBy(contentid=$.event('contentid'));
 				} else {
 					var entity=$.getBean('content').loadBy(contentid=arguments.id);
 				}
@@ -1779,7 +1781,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		if(isDefined('arguments.params.countOnly') && isBoolean(arguments.params.countOnly) && arguments.params.countOnly){
 			return {count=feed.getAvailableCount()};
 		} else {
-			var iterator=feed.getIterator();
+			var iterator=feed.getIterator(applyPermFilter=$.siteConfig('extranet'));
 			setIteratorProps(iterator,arguments.params);
 		}
 
@@ -1849,7 +1851,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		feed.addParam(column=pk,criteria=arguments.ids,condition='in');
 
 		setFeedProps(feed,arguments.params);
-		var iterator=feed.getIterator();
+		var iterator=feed.getIterator(applyPermFilter=$.siteConfig('extranet'));
 		setIteratorProps(iterator,arguments.params);
 
 
@@ -1945,7 +1947,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 			var started=false;
 
 			for(var p in arguments.params){
-				if(!listFindNoCase('maxItems,pageIndex,sort,itemsPerPage,sortBy,sortDirection,contentpoolid,shownavonly,showexcludesearch,includehomepage',p)){
+				if(!listFindNoCase('feedid,maxItems,pageIndex,sort,itemsPerPage,sortBy,sortDirection,contentpoolid,shownavonly,showexcludesearch,includehomepage',p)){
 					feed.addParam(column=p,criteria=arguments.params[p]);
 
 					if(started){
@@ -1998,7 +2000,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 						baseURL=baseURL & '=' & esapiEncode('url',params[p]);
 					}
 
-					if(!listFindNoCase('_cacheid,fields,entityname,method,maxItems,pageIndex,itemsPerPage,sortBy,sortDirection,contentpoolid,shownavonly,showexcludesearch,includehomepage',p)){
+					if(!listFindNoCase('feedid,_cacheid,fields,entityname,method,maxItems,pageIndex,itemsPerPage,sortBy,sortDirection,contentpoolid,shownavonly,showexcludesearch,includehomepage',p)){
 						if(propName == 'sort'){
 							advancedsort=listAppend(advancedsort,arguments.params[p]);
 						} else if(!(entity.getEntityName()=='user' && propName=='isPublic')){
@@ -2013,7 +2015,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 									feed.innerJoin(relatedEntity=params[p]);
 								} else if(propname=='leftJoin'){
 									feed.leftJoin(relatedEntity=params[p]);
-								} else if(entity.valueExists(propName) || entity.valueExists('extendData')){
+								} else if(propname=='id' || entity.valueExists(propName) || entity.valueExists('extendData')){
 									var condition="eq";
 									var criteria=arguments.params[p];
 
@@ -2023,6 +2025,14 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 									} else if(find('*',criteria)){
 										condition="like";
 										criteria=replace(criteria,'*','%','all');
+									}
+
+									if(propname=='id'){
+										if(entity.getEntityName()=='content'){
+											propname='contentid';
+										} else {
+											propname=entity.getPrimaryKey();
+										}
 									}
 
 									feed.addParam(column=propName,criteria=criteria,condition=condition,relationship=relationship);
@@ -2043,7 +2053,7 @@ component extends="mura.cfobject" hint="This provides JSON/REST API functionalit
 		if(isdefined('arguments.params.countOnly') && isBoolean(arguments.params.countOnly) && arguments.params.countOnly){
 			return {count=feed.getAvailableCount()};
 		} else {
-			var iterator=feed.getIterator();
+			var iterator=feed.getIterator(applyPermFilter=$.siteConfig('extranet'));
 
 			setIteratorProps(iterator=iterator);
 			var returnArray=iteratorToArray(iterator=iterator,siteid=arguments.siteid,expand=arguments.expand);

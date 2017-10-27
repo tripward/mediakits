@@ -65,7 +65,7 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 <cfset this.personalization="user">
 <cfset this.hasEditableObjects=false>
 <cfset this.asyncObjects=true>
-<cfset this.asyncRender=true>
+<cfset this.asyncRender=false>
 <cfset this.queueObjects=true>
 <cfset this.layoutmanager=false>
 <cfset this.legacyobjects=true>
@@ -2230,7 +2230,7 @@ Display Objects
 </cffunction>
 
 <cffunction name="createHREFForImage" output="false">
-	<cfargument name="siteID">
+	<cfargument name="siteID" default="">
 	<cfargument name="fileID">
 	<cfargument name="fileExt">
 	<cfargument name="size" required="true" default="undefined">
@@ -2239,6 +2239,9 @@ Display Objects
 	<cfargument name="height" default=""/>
 	<cfargument name="width" default=""/>
 	<cfargument name="secure" default="false">
+	<cfif not len(arguments.siteid) and isDefined('variables.$') and len(variables.$.event('siteid'))>
+		<cfset arguments.siteid=variables.$.event('siteid')>
+	</cfif>
 	<cfreturn getBean("fileManager").createHREFForImage(argumentCollection=arguments)>
 </cffunction>
 
@@ -2456,28 +2459,40 @@ Display Objects
 	<cfargument name="template" default="" required="true">
 	<cfargument name="baseDir" default="#variables.event.getSite().getIncludePath()#/includes" required="true">
 	<cfset var str='' />
-	<cfset var tracePoint=0>
-	<cfif arguments.template neq ''>
-		<cfset tracePoint=initTracePoint("#arguments.baseDir#/#arguments.template#")>
-		<cfsavecontent variable="str">
-			<cfinclude template="#arguments.baseDir#/#arguments.template#">
-		</cfsavecontent>
-		<cfset commitTracePoint(tracePoint)>
+	<cfset var tracePoint1=0>
+	<cfset var tracePoint2=0>
+	<cfif arguments.template neq '' and listFindNoCase('cfm,html,htm,txt',listLast(template,'.'))>
+		<cfset tracePoint1=initTracePoint("#baseDir#/#arguments.template#")>
+		<cfif getBean('utility').isPathLegal("#baseDir#/#arguments.template#")>
+			<cfsavecontent variable="str">
+				<cfinclude template="#baseDir#/#arguments.template#">
+			</cfsavecontent>
+		<cfelse>
+			<cfset tracePoint2=initTracePoint("Path excluded for being outside Mura root")>
+			<cfset commitTracePoint(tracePoint2)>
+		</cfif>
+		<cfset commitTracePoint(tracePoint1)>
 	</cfif>
 
 	<cfreturn trim(str) />
 </cffunction>
 
-<cffunction name="dspThemeInclude">
+<cffunction name="dspThemeInclude" output="false">
 	<cfargument name="template" default="" required="true">
 	<cfset var str='' />
-	<cfset var tracePoint=0>
-	<cfif arguments.template neq ''>
-		<cfset tracePoint=initTracePoint("#variables.$.siteConfig('themeIncludePath')#/#arguments.template#")>
-		<cfsavecontent variable="str">
-			<cfinclude template="#variables.$.siteConfig('themeIncludePath')#/#arguments.template#">
-		</cfsavecontent>
-		<cfset commitTracePoint(tracePoint)>
+	<cfset var tracePoint1=0>
+	<cfset var tracePoint2=0>
+	<cfif arguments.template neq '' and listFindNoCase('cfm,html,htm,txt',listLast(template,'.'))>
+		<cfset tracePoint1=initTracePoint("#variables.$.siteConfig('themeIncludePath')#/#arguments.template#")>
+		<cfif getBean('utility').isPathLegal("#variables.$.siteConfig('themeIncludePath')#/#arguments.template#")>
+			<cfsavecontent variable="str">
+				<cfinclude template="#variables.$.siteConfig('themeIncludePath')#/#arguments.template#">
+			</cfsavecontent>
+		<cfelse>
+			<cfset tracePoint2=initTracePoint("Path excluded for being outside Mura root")>
+			<cfset commitTracePoint(tracePoint2)>
+		</cfif>
+		<cfset commitTracePoint(tracePoint1)>
 	</cfif>
 
 	<cfreturn trim(str) />
@@ -3005,6 +3020,9 @@ Display Objects
 	<cfargument name="secure" default="false">
 	<cfargument name="useProtocol" default="true">
 	<cfscript>
+		if(not len(arguments.siteid) and isDefined('variables.$') and len(variables.$.event('siteid'))){
+			arguments.siteid=variables.$.event('siteid');
+		}
 		var imageURL = getBean('fileManager').createHREFForImage(argumentCollection=arguments);
 		if ( IsSimpleValue(imageURL) ) {
 			return imageURL;

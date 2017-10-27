@@ -160,7 +160,7 @@ component output="false" accessors="true" extends="mura.cfobject" hint="This pro
 			// Get the valdiations for this context
 			var contextValidations = getValidationsByContext(object=arguments.object, context=arguments.context);
 
-			/*writeDump(var=contextValidations,abort=true);*/
+			//writeDump(var=contextValidations,abort=true);
 
 			// Loop over each property in the validations for this context
 			for(var propertyIdentifier in contextValidations) {
@@ -207,33 +207,16 @@ component output="false" accessors="true" extends="mura.cfobject" hint="This pro
 
 
 	public any function validateConstraint(required any object, required string propertyIdentifier, required struct constraintDetails, required any errorsStruct, required string context) {
-		
-		
-		
-				/*if (arguments.PROPERTYIDENTIFIER IS 'influenceraccountid') {        
-        			WriteDump(arguments);abort;      
-        		};*/
-        		
-        		
 		if(structKeyExists(variables, "validate_#arguments.constraintDetails.constraintType#")) {
 
 			var isValid = invokeMethod("validate_#arguments.constraintDetails.constraintType#", {object=arguments.object, propertyIdentifier=arguments.propertyIdentifier, constraintValue=arguments.constraintDetails.constraintValue});
 
-
-				/*if (arguments.PROPERTYIDENTIFIER IS 'influenceraccountid') {        
-        			invokeMethod("validate_#arguments.constraintDetails.constraintType#", {object=arguments.object, propertyIdentifier=arguments.propertyIdentifier, constraintValue=arguments.constraintDetails.constraintValue});
-        			WriteDump(isValid);abort;
-
-        		};*/
-        		
-        		
 			if(!isValid) {
 				if(structKeyExists(arguments.constraintDetails,'rbkey')){
 					arguments.errorsStruct[arguments.propertyIdentifier]=getBean('settingsManager').getSite(arguments.object.getSiteID()).getRBFactory().getKey(arguments.constraintDetails.rbkey);
 				} else if(structKeyExists(arguments.constraintDetails,'message')){
 					arguments.errorsStruct[arguments.propertyIdentifier]=arguments.constraintDetails.message;
 				} else {
-					
 					arguments.errorsStruct[arguments.propertyIdentifier]="The property named '#arguments.propertyIdentifier#' is not valid";
 				}
 

@@ -86,7 +86,7 @@ this.sessionManagement = !(left(cgi.path_info,11) == '/_api/rest/');
 //  We don't set client cookies here, because they are not set secure if required. We use setSessionCookies()
 this.setClientCookies = true;
 param name="this.sessioncookies" default=structNew();
-this.sessioncookies.disableupdate = false;
+this.sessioncookie.disableupdate = false;
 this.searchImplicitScopes=false;
 /*  should cookies be domain specific, ie, *.foo.com or www.foo.com
 	this.setDomainCookies = not refind('\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b',listFirst(cgi.http_host,":"))>
@@ -235,7 +235,6 @@ variables.clientStorageCheck=evalSetting(getINIProperty("clientStorage",""));
 if ( len(variables.clientStorageCheck) ) {
 	this.clientStorage = variables.clientStorageCheck;
 }
-
 this.ormenabled =  evalSetting(getINIProperty("ormenabled","true"));
 this.ormSettings={};
 this.ormSettings.cfclocation=[];

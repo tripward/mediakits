@@ -108,8 +108,8 @@ component
 			return get('namefirst') & ' ' & get('namelast');
 		}
 		
-		public any function getID(struct myStruct) {
-			return variables.getinfluencerProfileid();
+		public any function getID() {
+			return get('influencerProfileid');
 		}
 
 		// @end Custom Methods

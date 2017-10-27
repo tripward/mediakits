@@ -474,6 +474,7 @@
 			utility(".editableObject").addClass('editableObjectHide');
 
 			if(typeof MuraInlineEditor != 'undefined' && MuraInlineEditor.inited){
+				MuraInlineEditor.sidebarAction('minimizesidebar');
 				utility(".mura-editable").addClass('mura-inactive');
 			}
 
@@ -488,6 +489,7 @@
 			utility(".editableObject").removeClass('editableObjectHide');
 
 			if(typeof MuraInlineEditor != 'undefined' && MuraInlineEditor.inited){
+				MuraInlineEditor.sidebarAction('restoresidebar');
 				utility(".mura-editable").removeClass('mura-inactive');
 			}
 		}
@@ -589,6 +591,12 @@
 		inited: false,
 		init: function(){
 
+			utility(document)
+				.trigger('muraContentEditInit')
+				.trigger('MuraContentEditInit')
+				.trigger('contentEditInit')
+				.trigger('ContentEditInit');
+
 			<cfif node.getType() eq 'Variation'>
 			if(!Mura('.mxp-editable').length){
 				return false;
@@ -618,6 +626,14 @@
 			MuraInlineEditor.inited=true;
 			utility('##adminSave').show();
 			utility('##adminStatus').hide();
+
+			utility('##adminAddContent').hide();
+			utility('##adminVersionHistory').hide();
+			utility('##adminPreview').hide();
+			utility('##adminAddContent-suspend').show();
+			utility('##adminVersionHistory-suspend').show();
+			utility('##adminPreview-suspend').show();
+
 			utility('.mura-editable').removeClass('mura-inactive');
 			window.Mura.editing=true;
 
@@ -1322,6 +1338,12 @@
 				utility('##adminSave').addClass('mura-saving');
 
 				utility('.mura-object-selected').removeClass('mura-object-selected');
+
+				utility(document)
+					.trigger('muraBeforeContentSave')
+					.trigger('MuraBeforeContentSave')
+					.trigger('beforeContentSave')
+					.trigger('BeforeContentSave');
 
 				MuraInlineEditor.validate(
 					function(){
@@ -2052,6 +2074,14 @@
 				Mura('#mura-sidebar-objects-legacy').hide();
 				Mura('#mura-sidebar-objects').hide();
 				Mura('#mura-sidebar-editor').show();
+			} else if(action=='minimizesidebar'){
+				Mura('#mura-sidebar-container').fadeOut();	
+				Mura('body').removeClass('mura-sidebar-state__pushed--right')
+				Mura('.mura-object').removeClass('mura-active').addClass("mura-active-min");
+			} else if(action=='restoresidebar'){
+				Mura('#mura-sidebar-container').fadeIn();	
+				Mura('body').addClass('mura-sidebar-state__pushed--right');
+				Mura('.mura-object').removeClass('mura-active-min').addClass("mura-active");
 			}
 		},
 		setAnchorSaveChecks:function(el){

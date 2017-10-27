@@ -10,6 +10,10 @@ component persistent="false" accessors="true" output="false" extends="baseServic
 		return this;
 	}
 	
+	public any function new() {
+		return SUPER.new();
+	}
+	
 	public any function getByUsername(required string email='') {
 		var result = '';
 		if ( Len( trim( arguments.email )) ) {

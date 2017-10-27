@@ -70,13 +70,15 @@ component
 			public any function validate() {
 				var obj = super.validate();
 				var errors = obj.getErrors();
+				
+				
 
 				// Hidden Form Fields
-					obj.set('datemodified', Now());
+				obj.set('datemodified', Now());
 
-					if ( !Len(obj.get('datecreated')) ) {
-						obj.set('datecreated', Now());
-					}
+				if ( !Len(obj.get('datecreated')) ) {
+					obj.set('datecreated', Now());
+				}
 
 				return this;
 			}

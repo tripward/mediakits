@@ -377,11 +377,12 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		};
 	</cfscript>
 	<cftry>
+		<cfset var theURL="http://" & "#variables.configBean.getFileStoreEndPoint()#/#arguments.bucket#/#local.rsFile.siteid#/cache/file/#arguments.fileid##local.size#.#local.rsFile.fileExt#">
 		<cfhttp attributeCollection='#getHTTPAttrs(
 			getasbinary="yes",
 			result="local.theFile",
 			method="get",
-			url="http://#variables.configBean.getFileStoreEndPoint()#/#arguments.bucket#/#local.rsFile.siteid#/cache/file/#arguments.fileid##local.size#.#local.rsFile.fileExt#")#'>
+			url=theURL)#'>
 		<cfcatch>
 		</cfcatch>
 	</cftry>
@@ -421,6 +422,28 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 		<cfset local.results.exif={}>
 	</cfif>
 	<cfreturn local.results>
+</cffunction>
+
+<cffunction name="allowMetaData" output="false">
+	<cfargument name="metadata">
+	<cfreturn _allowMetaData(metadata)>
+</cffunction>
+
+<cffunction name="_allowMetaData" output="false">
+	<cfargument name="metadata">
+	<cfset var key="">
+	<cfloop collection="#arguments.metadata#" item="key">
+		<cfif isSimpleValue(key)>
+			<cfif isStruct(arguments.metadata['#key#']) and not allowMetaData(arguments.metadata['#key#'])>
+				 <cfreturn false>
+			<cfelseif isSimpleValue(arguments.metadata['#key#']) and (findNoCase('<cf',arguments.metadata['#key#']) or findNoCase('</cf',arguments.metadata['#key#']))>
+				<cfreturn false>
+			</cfif>
+		<cfelseif isStruct(key) and not allowMetaData(key)>
+			<cfreturn false>
+		</cfif>
+	</cfloop>
+	<cfreturn true>
 </cffunction>
 
 <cffunction name="emulateUpload" output="false">

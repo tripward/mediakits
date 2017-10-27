@@ -995,27 +995,32 @@ component extends="mura.bean.beanExtendable" entityName="site" table="tsettings"
 						select * from rsDirs where type='Dir' and name not like '%.svn'
 					").getResult();
 				}
-		}
-		themeDir="#expandPath('/#variables.configBean.getWebRootMap()#')#/themes";
-		if ( directoryExists(themeDir) ) {
-			rsDirs=getBean('fileWriter').getDirectoryList(directory=themeDir, type='dir');
-			qs=getQueryService();
-			qs.setAttributes(rsDirs=rsDirs);
-			qs.setDbType('query');
-			if(isQuery(rs)){
-				qs.setAttributes(rs=rs);
-				rs=qs.execute(sql="
-					select * from rsDirs where type='Dir' and name not like '%.svn'
-					union
-					select * from rs
-				").getResult();
-			}else {
-				rs=qs.execute(sql="
-					select * from rsDirs where type='Dir' and name not like '%.svn'
-				").getResult();
+			}
+			themeDir="#expandPath('/#variables.configBean.getWebRootMap()#')#/themes";
+			if ( directoryExists(themeDir) ) {
+				rsDirs=getBean('fileWriter').getDirectoryList(directory=themeDir, type='dir');
+				qs=getQueryService();
+				qs.setAttributes(rsDirs=rsDirs);
+				qs.setDbType('query');
+				if(isQuery(rs)){
+					qs.setAttributes(rs=rs);
+					rs=qs.execute(sql="
+						select * from rsDirs where type='Dir' and name not like '%.svn'
+						union
+						select * from rs
+					").getResult();
+				}else {
+					rs=qs.execute(sql="
+						select * from rsDirs where type='Dir' and name not like '%.svn'
+					").getResult();
+				}
 			}
 		}
-	}
+
+		if(!isQuery(rs)){
+			rs=queryNew("empty");
+		}
+
 		return rs;
 	}
 
@@ -1501,11 +1506,12 @@ component extends="mura.bean.beanExtendable" entityName="site" table="tsettings"
 		var result="";
 		var coreIndex=arrayLen(variables.instance.contentTypeLoopUpArray)-2;
 		var dirIndex=0;
+		var utility=getBean('utility');
 		for ( dir in variables.instance.contentTypeLoopUpArray ) {
 			dirIndex=dirIndex+1;
 			if ( !arguments.customonly || dirIndex < coreIndex ) {
 				result=dir & arguments.filePath;
-				if ( fileExists(expandPath(result)) ) {
+				if ( fileExists(expandPath(result)) && utility.isPathLegal(result)) {
 					setContentTypeFilePath(arguments.filePath,result);
 					return result;
 				}
@@ -1767,11 +1773,12 @@ component extends="mura.bean.beanExtendable" entityName="site" table="tsettings"
 		var result="";
 		var coreIndex=arrayLen(variables.instance.displayObjectLoopUpArray)-2;
 		var dirIndex=0;
+		var utility=getBean('utility');
 		for ( dir in variables.instance.displayObjectLoopUpArray ) {
 			dirIndex=dirIndex+1;
 			if ( !arguments.customonly || dirIndex < coreIndex ) {
 				result=dir & arguments.filePath;
-				if ( fileExists(expandPath(result)) ) {
+				if ( fileExists(expandPath(result)) && utility.isPathLegal(result)) {
 					setDisplayObjectFilePath(arguments.filePath,result);
 					return result;
 				}
