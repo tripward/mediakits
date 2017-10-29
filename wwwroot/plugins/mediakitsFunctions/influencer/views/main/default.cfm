@@ -17,10 +17,10 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 	<h4>Registrations</h4>
 
-	<cfif len(rc.message)>
+	<cfif len(rc.messages)>
 		<div class="alert alert-info">
 			<a class="close" data-dismiss="alert" href="##">&times;</a>
-			#rc.message#
+			#rc.messages#
 		</div>
 	</cfif>
 

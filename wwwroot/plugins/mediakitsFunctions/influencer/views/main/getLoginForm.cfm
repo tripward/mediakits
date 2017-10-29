@@ -4,8 +4,62 @@
 
 <cfoutput>
 	
-<cfinclude template="/plugins/mediakitsFunctions/common/includes/messages.cfm" >
+<!---<cfinclude template="/plugins/mediakitsFunctions/common/includes/messages.cfm" >--->
+<!---<cftry>
+      <cfset foo = goo />
+      
+      <cfcatch type="any" >
+      	
+      	<cftry>
+      		<cfscript>
+      		
+      		
+	      		local.filestring = '';
+				for (tc in cfcatch.tagcontext) {
+					
+					local.filestring = local.filestring & '#listLast(tc.template,'\')# #tc.line#' & '~';
+				}
+	      	</cfscript>
+		      <cfcatch type="any" >
+				
+				<cfdump var="#cfcatch#" label="cfcatch" abort="true"  />
+				
+			</cfcatch>
+		</cftry>
+		#local.filestring#
+		<cfdump var="#cfcatch#" label="cfcatch" abort="true"  />
+		
+	</cfcatch>
+</cftry>--->
+
+<!---<cfscript>
+	try {
+		
+		foo = goo;
+		
+		
+	} catch (any e) {
+				
+		local.filestring = '';
+		for (tc in e.tagcontext) {
+			
+			local.filestring = local.filestring & '#listLast(tc.template,'\')# #tc.line#' & '~';
+		}
+		
+		
+		/*[#e.type#] #e.message# #e.detail# #local.filestring# #local.filestring#*/
+		/*WriteDump(#e.type# #e.message# #e.detail#);abort;*/
+		local.logEntry = #e.message# & #local.filestring#;
+		WriteLog(type="Error", file="myapp.log", text="#local.logEntry#");
+		/*WriteDump(#hyy#); WriteDump(#local.filestring#);*/
+		abort;
 	
+	
+	} 
+</cfscript>
+--->
+		
+
 <div class="row">
 	<div class="col-md-6">
 		<h4>login</h4>
@@ -13,7 +67,7 @@
 			<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.doLogin')#" />
 			<div class="form-group">
 				<label for="Username">Username</label>
-				<input id="Username" class="form-control" type="text" name="Username" value="" />
+				<input id="username" class="form-control" type="text" name="username" value="" />
 			</div>
 			<div class="form-group">
 				<label for="password">password</label>

@@ -88,7 +88,7 @@ include '/mediakits_env/mappings.cfm';
 	  
 	  
 	   application.su = CreateObject('component', 'security.SecurityUtils').init(application.securityConfig);
-	   /*WriteDump(var=application.securityutils,top=3,abort=true);*/
+	   /*WriteDump(var=application.SU,top=3,abort=true);*/
 	  
 	  try {
 	  arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/common/model/beans');
@@ -123,6 +123,9 @@ include '/mediakits_env/mappings.cfm';
 		
 		include '/mediakits_env/requestSettings.cfm';
 		include '/mediakits_env/mappings.cfm';
+		
+		 application.su = CreateObject('component', 'security.SecurityUtils').init(application.securityConfig);
+	   /*WriteDump(var=application.SU,top=3,abort=true);*/
 		
 		include '/security/xss.cfm';
 		include '/security/csrfCheck.cfm';

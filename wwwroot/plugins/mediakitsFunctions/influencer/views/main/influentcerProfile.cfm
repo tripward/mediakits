@@ -10,11 +10,13 @@ http://www.apache.org/licenses/LICENSE-2.0
 --->
 	<cfscript>
 		//request.layout = false;
-		local.newInfluencerAccount = rc.newInfluencerAccount;
+		/*local.newInfluencerAccount = rc.newInfluencerAccount;*/
 	</cfscript>
 </cfsilent>
 <!---<cfdump var="#local.newInfluencerAccount#" label="cgi" abort="true" top="3" />--->
 <cfoutput>
+	
+	this is the profile in influencerprofile.cfm
 	<!---<div class="row">
 		<div class="col-md-6">
 			<h4>Add Registration</h4>
@@ -35,11 +37,12 @@ http://www.apache.org/licenses/LICENSE-2.0
 	</div>--->
 	<!---<cfset objectParams.render = "client" />--->
 <!---<cfparam name="objectparams._p" default="1" >
-
+<cfset objectParams.render="server">
+<cfset objectParams.async="true">
 <cfset objectParams.async = "false"/>
 --->
 	<!---<form action="/index.cfm/infuencer-subscribe?mediakitsFunctionsaction=influencer:main.doSubscribe" role="form" method="post" enctype="multipart/form-data">--->
-	<form role="form" id="twitterForm">
+	<!---<form role="form" id="twitterForm">
 		<div>
 			<label for=”field”>First Name</label>
 			<input id=”firstname” type="text" name="firstname" value="#rc.$.esapiEncode('html_attr', local.newInfluencerAccount.getfirstname())#" /> 
@@ -109,7 +112,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 		</select>
 	</div>
 	<input type="submit" name="submit" value="submit" />
-</form>
+</form>--->
 
 <!---<script>
 m(function(){

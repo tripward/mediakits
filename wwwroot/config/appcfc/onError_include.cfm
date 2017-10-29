@@ -97,7 +97,7 @@ if ( !request.muraTemplateMissing ) {
 				mailto=application.configBean.getMailserverusername();
 				if(isDefined('application.serviceFactory')){
 					application.serviceFactory.getBean('utility').resetContent();
-					application.serviceFactory.getBean('utility').setHeader( statustext="An Error Occurred", statuscode=500 );
+					application.serviceFactory.getBean('utility').setHeader( statustext="An Error1 Occurred", statuscode=500 );
 				}
 				if ( len(application.configBean.getValue("errorTemplate")) ) {
 					include application.configBean.getValue('errorTemplate');
@@ -111,7 +111,7 @@ if ( !request.muraTemplateMissing ) {
 	}
 	try {
 		if(isDefined('application.serviceFactory')){
-			application.serviceFactory.getBean('utility').setHeader( statustext="An Error Occurred", statuscode=500 );
+			application.serviceFactory.getBean('utility').setHeader( statustext="An Error2 Occurred", statuscode=500 );
 		}
 	} catch (any cfcatch) {
 	}

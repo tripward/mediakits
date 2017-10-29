@@ -30,7 +30,8 @@ component
 	property name="discountStart" datatype="date" length="25" nullable=true;
 	property name="subscriptionStart" datatype="date" length="25" nullable=true;
 	property name="fieldsToBeUpdatedByStruct" persistent="false"    datatype="varchar" length="1000" default="firstname,lastname,email,address1,address2,address3,address4,city,state,zipcode,country" ;
-
+	property name="isLoggedIn" datatype="boolean" default="" persistent="false";
+	
 	// foreign key (pre-defined bean by Mura)
 	property name="site" cfc="site" fieldtype="many-to-one" fkcolumn="siteid";
 	property name="user" cfc="user" fieldtype="many-to-one" fkcolumn="userid";

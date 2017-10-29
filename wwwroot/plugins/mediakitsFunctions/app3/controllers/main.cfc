@@ -15,7 +15,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 	// ********************************* PAGES *******************************************
 
 	public void function default(required struct rc) {
-		param name='rc.message' default='';
+		param name='rc.messages' default='';
 		rc.registrations = variables.registrationService.list();
 	}
 
@@ -26,11 +26,11 @@ component persistent="false" accessors="true" output="false" extends="controller
 	public void function save(required struct rc) {
 		var registration = variables.registrationService.get(argumentCollection=arguments.rc);
 		variables.fw.populate(cfc=registration, keys='fname,lname,issubmitted,id', trim=true);
-		rc.message = 'Registration Saved!';
+		rc.messages = 'Registration Saved!';
 		try {
 			variables.registrationService.save(registration);
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 
 		variables.fw.redirect(action='app3:main', preserve='message');
@@ -38,21 +38,21 @@ component persistent="false" accessors="true" output="false" extends="controller
 
 	public void function delete(required struct rc) {
 		var registration = variables.registrationService.get(argumentCollection=arguments.rc);
-		rc.message = 'Registration Deleted!';
+		rc.messages = 'Registration Deleted!';
 		try {
 			variables.registrationService.delete(registration.getID());
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 		variables.fw.redirect(action='app3:main', preserve='message');
 	}
 
 	public void function clear(required struct rc) {
-		rc.message = 'All Registrations Have Been Cleared!';
+		rc.messages = 'All Registrations Have Been Cleared!';
 		try {
 			variables.registrationService.clearRegistrations();
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 		variables.fw.redirect(action='app3:main', preserve='message');
 	}

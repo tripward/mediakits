@@ -9,6 +9,6 @@
 
 <cfoutput>
 	
-this is the profile 
-
+this is the profile in getprofile
+<!---<cfdump var="#rc#" label="cgi" abort="true" top="3" />--->
 </cfoutput>

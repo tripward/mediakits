@@ -31,6 +31,18 @@
 
 	</cffunction>
 	
+	<cffunction name="securePassword" returntype="string" access="public">
+		<cfargument name="passwordToSecure" type="string" required="true" />
+
+		<cfreturn  arguments.passwordToSecure />
+	</cffunction>
+	
+	<cffunction name="isPasswordComplex" returntype="string" access="public">
+		<cfargument name="passwordToCheck" type="string" required="true" />
+		<cfset local.isComplex = TRUE />
+		<cfreturn  local.isComplex />
+	</cffunction>
+	
 	<cffunction name="decodeScope" access="public" returntype="void" output="false">
 		<cfargument name="scope" type="struct" required="true" />
 		<cfset var key = "" />

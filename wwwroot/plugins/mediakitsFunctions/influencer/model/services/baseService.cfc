@@ -9,7 +9,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 */
 component persistent="false" accessors="true" output="false" extends="mura.cfobject" {
 
-	
+	variables.datasource = 'mediakits_mura';
 	
 	public any function init() {
 		/*WriteDump(THIS);abort;*/

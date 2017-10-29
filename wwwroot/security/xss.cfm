@@ -2,16 +2,16 @@
 
 <!---Check form fields for xss--->
 <cfif !structIsEmpty(form)>
-	<cfset application.SecurityUtils.decodeScope(form) />
-	<cfset application.SecurityUtils.xssCheck(form) />
+	<cfset application.SU.decodeScope(form) />
+	<cfset application.SU.xssCheck(form) />
 </cfif>
 
 <!---Check url fields for xss--->
 <cfif !structIsEmpty(url)>
-	<cfset application.SecurityUtils.decodeScope(url) />
-	<cfset application.SecurityUtils.xssCheck(url) />
+	<cfset application.SU.decodeScope(url) />
+	<cfset application.SU.xssCheck(url) />
 </cfif>
 
-<cfset application.SecurityUtils.xssStringCheck(cgi.scrIPT_NAME) />
-<cfset application.SecurityUtils.xssStringCheck(cgi.quERY_STRING) />
-<cfset application.SecurityUtils.xssStringCheck(cgi.hTTP_REFERER) />
+<cfset application.SU.xssStringCheck(cgi.scrIPT_NAME) />
+<cfset application.SU.xssStringCheck(cgi.quERY_STRING) />
+<cfset application.SU.xssStringCheck(cgi.hTTP_REFERER) />

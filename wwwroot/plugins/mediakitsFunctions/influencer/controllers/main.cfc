@@ -21,86 +21,34 @@ component persistent="false" accessors="true" output="false" extends="controller
 	// ********************************* PAGES *******************************************
 
 	public void function before(required struct rc) {
-		param name='rc.errors' default='#arraynew(1)#';
+		param name='rc.errors' default='#structNew()#';
+		param name='rc.messages' default='#arraynew(1)#';
 	}
 	
 	public void function default(required struct rc) {
-		param name='rc.message' default='';
+		param name='rc.messages' default='';
 		/*rc.registrations = variables.registrationService.list();*/
 		/*message = "funning";*/
 		/*variables.fw.redirect(action='influencer:main.justfun', preserve='message');*/
 	}
 
-	public void function form(required struct rc) {
-		/*WriteDump(variables);abort;*/
-		rc.registration = variables.registrationService.get(argumentCollection=arguments.rc);
-	}
-	
-	public void function getLoginForm(required struct rc) {
-		
-	}
-	
-	public void function doLogin(required struct rc) {
-		
-		/*message = "funning";
-		variables.fw.redirect(action='influencer:main.justfun', preserve='message');*/
-		
-		if (!len(rc.username)) {
-			arrayAppend(rc.message,'Username is required');
-		}
-		
-		if (!len(rc.hashedPassword)) {
-			arrayAppend(rc.message,'password is required');
-		}
-		
-		if (arrayLen(rc.message)) {
-			variables.fw.redirect(action='influencer:main.getLoginForm', preserve='message');
-			abort;
-		}
-		
-		rc.hashedPassword = application.su.hashThis(rc.password);
-		
-		rc.influencerAccount = getBean('InfluencerAccount').loadBy(emailaddress=rc.username,password=rc.password);
-		/*variables.fw.redirect(action='influencer:main.influentcerProfile', preserve='message', queryString='');*/
-		location("/infuencer-profile/?InfuencerAccount=#rc.influencerAccount.getID()#", false, '302');
-		abort;
-		
-		
-	}
-	
 	public void function getSubScribeForm(required struct rc) {
 		rc.availableSubscriptions = variables.InfluencerSubscriptionService.getIterator().getArray();
 		rc.newInfluencerAccount = variables.influencerAccountService.new();
 	}
-	
-	public void function justfun(required struct rc) {
-		/*WriteDump(var=session,top=2,abort=true);*/
-		
 
-
-	}
-	
-	public void function getProfile(required struct rc) {
-		/*WriteDump(var=session,top=2,abort=true);*/
-		
-
-		/*if (structKeyExists(session,'influencerAccount')) {
-			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
-		}*/
-		/*else if (structKeyExists(rc,'accountid')) {
-			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfuencerAccount.getID());
-		}*/
-		/*else {
-			WriteDump('no influencerID was passed in session or url');
-			WriteDump(var=rc,top=2,abort=true);
-		}*/
-
-	}
-	
 	public void function doSubscribe(required struct rc) {
 		
 		//somewhat of a place holder to pass the info to payment gate way
 		rc.paymentInfo = variables.paymentGatewayService.setUpPayment(rc);
+		
+		if (variables.InfluencerAccountService.doesAccountExist(rc.email)) {
+			structInsert(rc.errors,'accountExists','Account Already Exists');
+		}
+		/*WriteDump(var=application.SU.isPasswordComplex(rc.password),top=2,label='goo', abort=true);*/
+		if (!application.SU.isPasswordComplex(rc.password)) {
+			structInsert(rc.errors,'passwordComplexity','Password Complexity');
+		}
 		
 		//if the payment went through we can create the account
 		if (rc.paymentInfo.isSuccess) {
@@ -120,7 +68,6 @@ component persistent="false" accessors="true" output="false" extends="controller
 					.set('zipcode', rc.zipcode);
 			/*WriteDump(var=rc.newAccount,top=2,abort=false);*/
 			
-			
 			/*run a quick validation to see if we can create the account */
 			rc.validatedNewAccount = rc.newAccount.validate();
 			/*WriteDump(var=rc.validatedNewAccount,top=2,abort=false);*/
@@ -131,8 +78,9 @@ component persistent="false" accessors="true" output="false" extends="controller
 			}
 			
 			/*if we have validation issues, go back to the sub form*/
-			if (!structIsEmpty(rc.validatedNewAccount.getErrors())) {
-				rc.validationMessages = rc.validatedNewAccount.getErrors();
+			if (!structIsEmpty(rc.validatedNewAccount.getErrors()) OR !structIsEmpty(rc.errors)) {
+				structAppend(rc.errors, rc.validatedNewAccount.getErrors());
+				/*WriteDump(var=rc.errors,top=2,label='goo', abort=false);*/
 				variables.fw.redirect(action='influencer:main.getSubScribeForm', preserve='ALL');
 				abort;
 			}
@@ -157,7 +105,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 
 			/*WriteDump(var=rc.newInfluencerProfile,top=2,label='goo', abort=true);*/
 
-			variables.fw.redirect(path='/infuencer-profile/', action='',preserveAll='ALL',queryString='influenceraccountid=#rc.newAccount.getID()#');
+			variables.fw.redirect(path='/infuencer-profile/?influenceraccountid=#rc.newAccount.getID()#', action='',preserveAll='ALL',queryString='');
 			//todo: lock
 			/*session.influenceraccount = rc.pulledAccount;
 			location("/infuencer-profile/?InfuencerAccount=#rc.pulledAccount.getID()#", false, '302');abort;*/
@@ -167,43 +115,129 @@ component persistent="false" accessors="true" output="false" extends="controller
 			WriteOutput("payment Failed");abort;
 		}
 
-		
-		
-		
 	}
 	
+	public void function getLoginForm(required struct rc) {
+		/*WriteDump(var=rc.errors,top=2,label='goo', abort=false);*/
+	}
 	
+	public void function doLogin(required struct rc) {
+		
+        	try {
+        
+		
+		if (!len(trim(rc.username))) {
+			structInsert(rc.errors,'username','Username is required');
+		}
+		
+		if (!len(trim(rc.password))) {
+			structInsert(rc.errors,'password','password is required');
+		}
+		
+		rc.securedPassword = application.su.securePassword(rc.password);
+
+		rc.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
+		
+		if (rc.influencerAccount.getIsNew()) {
+			structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
+		}
+		
+		
+		/*WriteDump(var=rc.errors,top=2,label='goo', abort=true);*/
+		
+		if (!structIsEmpty(rc.errors)) {
+			WriteDump(var=rc.errors,top=2,label='goo', abort=true);
+			/*variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');*/
+			variables.fw.redirect(path='/influencer-login-form/', action='',preserveAll='ALL',queryString='');
+			abort;
+		} else {
+			WriteDump(var='gggggggggggggg',top=2,label='goo', abort=true);
+			/*variables.fw.redirect(action='influencer:main.influentcerProfile', preserve='message', queryString='');*/
+			location("/infuencer-profile/?InfuencerAccount=#rc.influencerAccount.getID()#", false, '302');
+			abort;
+		}
+		
+		
+		
+		} catch (any e) {
+			local.filestring = '';
+			for (tc in e.tagcontext) {
+				local.filestring = local.filestring & '#listLast(tc.template,'\')# #tc.line#' & '~';        
+			}
+			/*[#e.type#] #e.message# #e.detail# #local.filestring# #local.filestring#*/        
+			/*WriteDump(#e.type# #e.message# #e.detail#);abort;*/        
+			local.logEntry = #e.message# & #local.filestring#;        
+			WriteLog(type="Error", file="myapp.log", text="#local.logEntry#");        
+			/*WriteDump(#hyy#); WriteDump(#local.filestring#);*/        
+			abort;
+
+			}
+
+	}
+	
+	public void function getProfile(required struct rc) {
+		WriteDump(var=rc,top=2,abort=true);
+		
+
+		if (structKeyExists(session,'influencerAccount')) {
+			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
+		}
+		/*else if (structKeyExists(rc,'accountid')) {
+			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfuencerAccount.getID());
+		}*/
+		/*else {
+			WriteDump('no influencerID was passed in session or url');
+			WriteDump(var=rc,top=2,abort=true);
+		}*/
+
+	}
+	
+	public void function doLogOut(required struct rc) {
+		
+		lock timeout="3" scope="Session" type="exclusive" {
+			structClear(session);
+			location("/", false, '302');
+			abort;
+		
+		}
+			
+	}
 
 	public void function save(required struct rc) {
 		var registration = variables.registrationService.get(argumentCollection=arguments.rc);
 		variables.fw.populate(cfc=registration, keys='fname,lname,issubmitted,id', trim=true);
-		rc.message = 'Registration Saved!';
+		rc.messages = 'Registration Saved!';
 		try {
 			variables.registrationService.save(registration);
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 
 		variables.fw.redirect(action='app3:main', preserve='message');
 	}
+	
+	public void function form(required struct rc) {
+		/*WriteDump(variables);abort;*/
+		rc.registration = variables.registrationService.get(argumentCollection=arguments.rc);
+	}
 
 	public void function delete(required struct rc) {
 		var registration = variables.registrationService.get(argumentCollection=arguments.rc);
-		rc.message = 'Registration Deleted!';
+		rc.messages = 'Registration Deleted!';
 		try {
 			variables.registrationService.delete(registration.getID());
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 		variables.fw.redirect(action='app3:main', preserve='message');
 	}
 
 	public void function clear(required struct rc) {
-		rc.message = 'All Registrations Have Been Cleared!';
+		rc.messages = 'All Registrations Have Been Cleared!';
 		try {
 			variables.registrationService.clearRegistrations();
 		} catch (any e) {
-			rc.message = e.message;
+			rc.messages = e.message;
 		};
 		variables.fw.redirect(action='app3:main', preserve='message');
 	}

@@ -15,12 +15,16 @@ component
 
 		property name="twitterUserName" datatype="varchar" length="50" default="";
 		property name="twitterPassword" datatype="varchar" length="50" default="";
+		property name="twitterFollowers" datatype="numeric" length="10" default="0";
 		property name="pintrestUserName" datatype="varchar" length="50" default="";
 		property name="pintrestPassword" datatype="varchar" length="50" default="";
+		property name="pintrestFollowers" datatype="numeric" length="10" default="0";
 		property name="instagramUserName" datatype="varchar" length="50" default="";
 		property name="instagramPassword" datatype="varchar" length="50" default="";
+		property name="instagramFollowers" datatype="numeric" length="10" default="0";
 		property name="FacebookUsername" datatype="varchar" length="50" default="";
 		property name="facebookPassword" datatype="varchar" length="50" default="";
+		property name="facebookFriends" datatype="numeric" length="10" default="0";
 		property name="facebookBusinesspageLink" datatype="varchar" length="255" default="";
 		property name="googleAnalyticsUsername" datatype="varchar" length="50" default="";
 		property name="googleAnalyticsPassword" datatype="varchar" length="50" default="";
