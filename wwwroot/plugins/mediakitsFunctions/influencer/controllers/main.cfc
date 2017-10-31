@@ -105,7 +105,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 
 			/*WriteDump(var=rc.newInfluencerProfile,top=2,label='goo', abort=true);*/
 
-			variables.fw.redirect(path='/infuencer-profile/?influenceraccountid=#rc.newAccount.getID()#', action='',preserveAll='ALL',queryString='');
+			variables.fw.redirect(path='/infuencer-profile/?influenceraccountid=#rc.newAccount.getID()#', action='',preserve='ALL',queryString='');
 			//todo: lock
 			/*session.influenceraccount = rc.pulledAccount;
 			location("/infuencer-profile/?InfuencerAccount=#rc.pulledAccount.getID()#", false, '302');abort;*/
@@ -122,42 +122,36 @@ component persistent="false" accessors="true" output="false" extends="controller
 	}
 	
 	public void function doLogin(required struct rc) {
-		
-        	try {
+
+		try {
         
 		
-		if (!len(trim(rc.username))) {
-			structInsert(rc.errors,'username','Username is required');
-		}
-		
-		if (!len(trim(rc.password))) {
-			structInsert(rc.errors,'password','password is required');
-		}
-		
-		rc.securedPassword = application.su.securePassword(rc.password);
-
-		rc.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
-		
-		if (rc.influencerAccount.getIsNew()) {
-			structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
-		}
-		
-		
-		/*WriteDump(var=rc.errors,top=2,label='goo', abort=true);*/
-		
-		if (!structIsEmpty(rc.errors)) {
-			WriteDump(var=rc.errors,top=2,label='goo', abort=true);
-			/*variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');*/
-			variables.fw.redirect(path='/influencer-login-form/', action='',preserveAll='ALL',queryString='');
-			abort;
-		} else {
-			WriteDump(var='gggggggggggggg',top=2,label='goo', abort=true);
-			/*variables.fw.redirect(action='influencer:main.influentcerProfile', preserve='message', queryString='');*/
-			location("/infuencer-profile/?InfuencerAccount=#rc.influencerAccount.getID()#", false, '302');
-			abort;
-		}
-		
-		
+			if (!len(trim(rc.username))) {
+				structInsert(rc.errors,'username','Username is required');
+			}
+			
+			if (!len(trim(rc.password))) {
+				structInsert(rc.errors,'password','password is required');
+			}
+			
+			rc.securedPassword = application.su.securePassword(rc.password);
+	
+			rc.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
+			
+			if (rc.influencerAccount.getIsNew()) {
+				structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
+			}
+			
+			
+			/*WriteDump(var=rc.errors,top=2,label='goo', abort=true);*/
+			
+			if (!structIsEmpty(rc.errors)) {
+				variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');/*,preserve='ALL'*/
+				abort;
+			} else {
+				variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#rc.influencerAccount.getID()#');/*,preserve='ALL'*/
+				abort;
+			}
 		
 		} catch (any e) {
 			local.filestring = '';
@@ -176,7 +170,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 	}
 	
 	public void function getProfile(required struct rc) {
-		WriteDump(var=rc,top=2,abort=true);
+		
 		
 
 		if (structKeyExists(session,'influencerAccount')) {
@@ -195,9 +189,12 @@ component persistent="false" accessors="true" output="false" extends="controller
 	public void function doLogOut(required struct rc) {
 		
 		lock timeout="3" scope="Session" type="exclusive" {
-			structClear(session);
-			location("/", false, '302');
-			abort;
+			
+			session.loggedIn = 0;
+			structDelete(session,'InfluencerAccount');
+			/*structClear(session);*/
+			/*variables.fw.redirect(path='/', action='',preserve='ALL',queryString='');
+			abort;*/
 		
 		}
 			

@@ -115,6 +115,16 @@ include '/mediakits_env/mappings.cfm';
 	</cffunction>
 	--->
 	
+	<cffunction name="onSiteSessionStart">
+		<cfargument name="$" />
+		
+		
+		<cfset session.loged = 0 />
+		
+
+		
+	</cffunction>
+	
 	
 	
 	<cffunction name="onSiteRequestStart">
