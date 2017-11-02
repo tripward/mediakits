@@ -29,7 +29,7 @@ this is the profile in getprofile
 		
 		<h4>General Info</h4>
 		<div id="general" class="form-group">
-			<label for="firstname">First Name</label>
+			<label for="firstname">First Name2</label>
 			<input id="general_firstname" class="form-control" type="text" size="20" name="firstname" value="#rc.influencerAccount.getFirstName()#" />
 			<label for="lastname">Last Name</label>
 			<input id="general_lastname" class="form-control" type="text" size="20" name="lastname" value="#rc.influencerAccount.getLastName()#" />
