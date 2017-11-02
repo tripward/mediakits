@@ -30,7 +30,7 @@ component
 	property name="discountStart" datatype="date" length="25" nullable=true;
 	property name="subscriptionStart" datatype="date" length="25" nullable=true;
 	property name="fieldsToBeUpdatedByStruct" persistent="false"    datatype="varchar" length="1000" default="firstname,lastname,email,address1,address2,address3,address4,city,state,zipcode,country" ;
-	property name="isLoggedIn" datatype="boolean" default="" persistent="false";
+	property name="influencerloggedIn" datatype="boolean" default="0" persistent="false";
 	
 	// foreign key (pre-defined bean by Mura)
 	property name="site" cfc="site" fieldtype="many-to-one" fkcolumn="siteid";
@@ -51,9 +51,8 @@ component
 		name="profile"
 		relatesTo="InfluencerProfile"
 		fieldtype="one-to-one"
-		/*fkcolumn="influencerProfileid"*/
-		/*loadkey="influencerProfileid"*/
-		cascade="delete";
+		cascade="delete"
+		loadkey="influenceraccountid";
 		
 	/*property
 		name="phonenumbers"
@@ -90,6 +89,10 @@ component
 			public any function getid() {
 				return get('influenceraccountid');
 			}
+			
+			/*public any function getProfile() {
+				return getBean('InfluencerProfile').loadBy(influenceraccountid=this.getID());
+			}*/
 
 		// @end Custom Methods
 }

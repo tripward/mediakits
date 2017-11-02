@@ -78,35 +78,22 @@ include '/mediakits_env/mappings.cfm';
 
 
 	public any function onApplicationLoad(m) {
-	  
-	  include '/mediakits_env/applicationSettings.cfm';
-	  
-	  // This is how you could register a 'model' directory in a plugin
-	  arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/model/beans');
-	  /*arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/influencer/model/beans');*/
-	  
-	  
-	  
+
+		include '/mediakits_env/applicationSettings.cfm';
+
 	   application.su = CreateObject('component', 'security.SecurityUtils').init(application.securityConfig);
 	   /*WriteDump(var=application.SU,top=3,abort=true);*/
-	  
+
 	  try {
-	  arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/common/model/beans');
-	  } catch (any e) {
-			WriteDump(e);abort;
+		// This is how you could register a 'model' directory in a plugin
+		arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/common/model/beans');
+		arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/model/beans');
+		} catch (any e) {
+			WriteDump(var=e,top=2,label='in application start', abort=true);
 		} 
 	  
 	}			
 </cfscript>
-
-
-
-	<!---
-			This is the SITE eventHandler.cfc
-
-			* Add site-specific eventHandlers here
-			* This file is much like a controller in a MVC application 
-	--->
 
 	<!---	
 	<cffunction name="onPageDefaultBodyRender" access="public" output="false" returntype="any">
@@ -118,10 +105,7 @@ include '/mediakits_env/mappings.cfm';
 	<cffunction name="onSiteSessionStart">
 		<cfargument name="$" />
 		
-		
-		<cfset session.loged = 0 />
-		
-
+		<cfset session.influencerloggedIn = 0 />
 		
 	</cffunction>
 	
@@ -131,20 +115,26 @@ include '/mediakits_env/mappings.cfm';
 		<cfargument name="$" />
 		<cfset $ = arguments.$ />
 		
-		include '/mediakits_env/requestSettings.cfm';
-		include '/mediakits_env/mappings.cfm';
+		<cfscript>
+			if (!structKeyExists(session,'influencerloggedIn')) {
+				session.influencerloggedIn = 0;
+			}
+			
+			include '/mediakits_env/requestSettings.cfm';
+			include '/mediakits_env/mappings.cfm';
+			
+			 application.su = CreateObject('component', 'security.SecurityUtils').init(application.securityConfig);
+			
+			include '/security/xss.cfm';
+			include '/security/csrfCheck.cfm';
+			include '/security/security_misc.cfm';
+			
+			if (request.isReloadOnEveryRequest OR structKeyExists(url, 'appreload')) {        
+				onApplicationLoad($);
+			}
+			
+		</cfscript>
 		
-		 application.su = CreateObject('component', 'security.SecurityUtils').init(application.securityConfig);
-	   /*WriteDump(var=application.SU,top=3,abort=true);*/
-		
-		include '/security/xss.cfm';
-		include '/security/csrfCheck.cfm';
-		include '/security/security_misc.cfm';
-		
-		if (request.isReloadOnEveryRequest OR structKeyExists(url, 'bhf9pceM!')) {        
-			onApplicationLoad($);
-		}
-	
 		<!---<cfscript>
 			
 			if(server.coldfusion.productname != 'ColdFusion Server'){
@@ -155,9 +145,6 @@ include '/mediakits_env/mappings.cfm';
 				include "#backportdir#backport.cfm";
 			}
 		</cfscript>--->
-		
-		
-
 		
 	</cffunction>
 	

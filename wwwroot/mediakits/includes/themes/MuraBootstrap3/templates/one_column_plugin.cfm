@@ -12,7 +12,7 @@
 					
 					</cfif>
 					
-					
+					<cfinclude template="inc/loggedInnavbar.cfm" />
 					
 					<!---#m.dspObject(object="influencerSubscribeForm", objectparams={async='false', render='server'})#--->
 					

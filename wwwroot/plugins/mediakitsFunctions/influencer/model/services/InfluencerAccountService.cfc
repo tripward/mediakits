@@ -27,21 +27,38 @@ component persistent="false" accessors="true" output="false" extends="baseServic
 		return accountExists.recordCount;
 	}
 	
+	public any function getQueryByAttributes(required struct searchCriteria) {
+
+		var accountExists.recordCount = 0;
+		
+		accountExists=QueryExecute(("SELECT email FROM #variables.tableName# WHERE email = :email"),{email=arguments.email},
+		{datasource="#variables.datasource#"});
+		/*WriteDump(var=accountExists.recordCount,top=2,label='goo', abort=true);*/
+		return accountExists.recordCount;
+	}
+	
 	public any function getByLoginCreds(required string username='', required string password='' ) {
 
 		/*WriteDump(var=arguments,top=2,label='goo', abort=true);*/
 		/*local.influencerAccount = getBean('InfluencerAccount').loadBy(emailaddress=arguments.username,password=arguments.password);*/
 		local.influencerAccount = getBean('InfluencerAccount').loadBy(email='#arguments.username#');
-		
-		
-		/*foo = THIS.doesAccountExist(arguments.username);
-		
-		WriteDump(var=foo,top=2,label='local.influencerAccount', abort=false);
-		WriteDump(var=local.influencerAccount,top=2,label='local.influencerAccount', abort=true);*/
-		
-		
-	
+
 		return local.influencerAccount;
+	}
+	
+	public any function getAccountIDLoginCreds(required string username='', required string password='' ) {
+		var local.accountID = '';
+		
+		/*local.accountID = QueryExecute(("SELECT influenceraccountid FROM #variables.tableName# WHERE email = :email AND password = :password"),{email=arguments.username,password=arguments.password},*/
+		local.accountQuery = QueryExecute(("SELECT influenceraccountid FROM #variables.tableName# WHERE email = :email"),{email=arguments.username},
+		{datasource="#variables.datasource#"});
+		
+		if (local.accountQuery.recordCount) {
+			local.accountID = local.accountQuery.influenceraccountid;
+		}
+		WriteDump(var=local.accountID,top=2,label='goo', abort=true);
+
+		return local.accountID;
 	}
 	
 	public any function getByUsername(required string email='') {

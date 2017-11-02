@@ -130,7 +130,7 @@
 			
 			<cflock timeout="10" scope="session" type="readonly">
 				<cfset session.user =  this.UserServices.getByPK(rc.user.getID()) />/>
-				<cfset session.user.setIsLoggedIn(1) />
+				<cfset session.user.setinfluencerloggedIn(1) />
 			</cflock>
 			
 			<cfset variables.fw.redirect(action='subscribe:main.welcome',preserve='all') />
@@ -255,7 +255,7 @@
 	
 	<cflock timeout="10" scope="session" type="readonly">
 		
-		<cfset rc.user.setIsLoggedIn(1) />
+		<cfset rc.user.setinfluencerloggedIn(1) />
 		<cfset session.user = duplicate(rc.user) />
 	</cflock>
 	
@@ -327,7 +327,7 @@
 	
 	<cflock timeout="10" scope="session" type="readonly">
 		<cfset rc.user = UserServices.getByPK(session.user.getUserID()) />
-		<cfset rc.user.setIsLoggedIn(1) />
+		<cfset rc.user.setinfluencerloggedIn(1) />
 	</cflock>
 	
 			

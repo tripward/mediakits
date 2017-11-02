@@ -17,6 +17,10 @@ component persistent="false" accessors="true" output="false" extends="controller
 	property name='InfluencerSubscriptionToAccountService';
 	property name='InfluencerProfileService';
 	property name='paymentGatewayService';
+	property name='twitterService';
+	property name='pintrestService';
+	property name='InstagramService';
+	property name='faceBookService';
 
 	// ********************************* PAGES *******************************************
 
@@ -135,23 +139,30 @@ component persistent="false" accessors="true" output="false" extends="controller
 			}
 			
 			rc.securedPassword = application.su.securePassword(rc.password);
-	
-			rc.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
 			
-			if (rc.influencerAccount.getIsNew()) {
-				structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
+			lock name="lockName" timeout="3" {
+				session.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
+			
+			
+				if (session.influencerAccount.getIsNew()) {
+					structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
+				} else {
+					session.influencerloggedIn = 1;
+					session.influencerAccount.setInfluencerloggedIn(1);
+				}
+				
+				/*WriteDump(var=rc.errors,top=2,label='goo', abort=true);*/
+			
+				if (!structIsEmpty(rc.errors)) {
+					variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');/*,preserve='ALL'*/
+					abort;
+				} else {
+					variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+					abort;
+				}
+			
 			}
 			
-			
-			/*WriteDump(var=rc.errors,top=2,label='goo', abort=true);*/
-			
-			if (!structIsEmpty(rc.errors)) {
-				variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');/*,preserve='ALL'*/
-				abort;
-			} else {
-				variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#rc.influencerAccount.getID()#');/*,preserve='ALL'*/
-				abort;
-			}
 		
 		} catch (any e) {
 			local.filestring = '';
@@ -160,8 +171,34 @@ component persistent="false" accessors="true" output="false" extends="controller
 			}
 			/*[#e.type#] #e.message# #e.detail# #local.filestring# #local.filestring#*/        
 			/*WriteDump(#e.type# #e.message# #e.detail#);abort;*/        
-			local.logEntry = #e.message# & #local.filestring#;        
-			WriteLog(type="Error", file="myapp.log", text="#local.logEntry#");        
+			local.logEntry = 'login process' & #e.message# & #local.filestring#;        
+			WriteLog(type="Error", file="mediaKits_error.log", text="#local.logEntry#");        
+			/*WriteDump(#hyy#); WriteDump(#local.filestring#);*/        
+			abort;
+
+			}
+
+	}
+	
+	public void function getprofileTwitterStats(required struct rc) {
+
+		try {
+        WriteDump(var=session.InfluencerAccount.getProfile(),top=2,label='hhh', abort=true);
+		if (structKeyExists(session,"influencerAccount") AND len(trim(session.InfluencerAccount.getProfile().getTwitterUsername()))) {
+			rc.twitterStats = rc.influencerAccount = variables.twitterService.getFollowerCountAsJSON(username=rc.username,password=rc.securedPassword);
+			WriteDump(var=rc.twitterStats,top=2,label='goo', abort=true);
+		}
+			
+		
+		} catch (any e) {
+			local.filestring = '';
+			for (tc in e.tagcontext) {
+				local.filestring = local.filestring & '#listLast(tc.template,'\')# #tc.line#' & '~';        
+			}
+			/*[#e.type#] #e.message# #e.detail# #local.filestring# #local.filestring#*/        
+			/*WriteDump(#e.type# #e.message# #e.detail#);abort;*/        
+			local.logEntry = 'login process' & #e.message# & #local.filestring#;        
+			WriteLog(type="Error", file="mediaKits_error.log", text="#local.logEntry#");        
 			/*WriteDump(#hyy#); WriteDump(#local.filestring#);*/        
 			abort;
 
@@ -171,18 +208,30 @@ component persistent="false" accessors="true" output="false" extends="controller
 	
 	public void function getProfile(required struct rc) {
 		
-		
-
 		if (structKeyExists(session,'influencerAccount')) {
 			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
+		} else {
+			location("/log-in/", false, '302');abort;
 		}
-		/*else if (structKeyExists(rc,'accountid')) {
-			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfuencerAccount.getID());
-		}*/
-		/*else {
-			WriteDump('no influencerID was passed in session or url');
-			WriteDump(var=rc,top=2,abort=true);
-		}*/
+		
+	}
+	
+	public void function persistProfile(required struct rc) {
+		WriteDump(var=rc.TwitterUsername,top=1,label='goo', abort=false);
+		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		
+		rc.profile = rc.influencerAccount.getProfile();
+		rc.profile = rc.profile.populateFromForm(rc);
+		
+		rc.profile = rc.profile.validate();
+		if (structIsEmpty(rc.profile.getErrors())) {
+			rc.profile.save();
+			rc.message = arrayAppend(rc.messages, 'profile Saved');
+		}
+		lock name="lockName" timeout="3" {
+			session.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		}
+		variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
 
 	}
 	

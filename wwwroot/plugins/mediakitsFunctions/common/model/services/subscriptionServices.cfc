@@ -203,7 +203,7 @@
 		
 
 		<cfset arguments.user.setActive(0) />
-		<cfset arguments.user.setIsLoggedIn(0) />
+		<cfset arguments.user.setinfluencerloggedIn(0) />
 		<cfset arguments.user.setppprofileStatus('canceled') />
 		<cfset arguments.user = this.UserServices.persist(arguments.user) />
 	
