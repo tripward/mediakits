@@ -1,0 +1,41 @@
+/* Header Partial */
+////////////////////
+
+/////////////////
+// VARIABLES
+/////////////////
+
+
+
+
+/////////////////////
+// CONTENT SECTIONS
+/////////////////////
+
+header {   
+    background-image: url(/mediakits/includes/themes/mediakits/images/footer-image.jpg);
+    background-size:cover;
+    height:90px;
+    
+    .row {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        
+        h1 {
+            color:white;
+            margin:0;
+        }
+
+        #logged-in-name {
+            color:white;
+            font-weight:bold;
+            margin-right:20px;
+        }
+        
+        
+    }
+    
+   
+}
+

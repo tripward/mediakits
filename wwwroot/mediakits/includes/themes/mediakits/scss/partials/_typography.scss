@@ -1,0 +1,85 @@
+/* Typography Styles */
+/////////////////
+
+// FONT-FACES
+
+@font-face {
+    font-family: Gilroy;
+    src: url(/mediakits/includes/themes/mediakits/fonts/Gilroy-Light.otf);
+    font-weight:normal;
+}
+
+@font-face {
+    font-family: Gilroy;
+    src: url(/mediakits/includes/themes/mediakits/fonts/Gilroy-ExtraBold.otf);
+    font-weight:bold;
+}
+
+
+/////////////////
+// VARIABLES
+/////////////////
+
+
+
+
+
+/////////////////
+// ELEMENTS
+/////////////////
+
+* {
+    font-family: "Gilroy", Calibri, Helvetica, Arial, sans-serif;
+    margin:none;
+    padding:none;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight:bold;    
+}
+
+h2 {
+    color: #7a59a5;
+}
+
+a {
+    color:#ff5880;
+    font-weight:bold;
+}
+
+a:hover {
+    color: #bb2d4f;
+}
+
+p {
+    font-size:18px;
+    color: #265f7d;
+}
+
+
+/////////////////
+// BUTTONS
+/////////////////
+
+a.button {
+    padding:10px;
+    color:white;
+    font-weight:normal;
+    
+    &:not(:last-child) {
+        margin-right:20px;
+    }
+    
+
+    &.highlight-bg {
+        background:#ff5880;
+        font-weight:bold;
+    }
+    
+}
+
+
+/////////////////
+// MODIFIERS
+/////////////////
+
