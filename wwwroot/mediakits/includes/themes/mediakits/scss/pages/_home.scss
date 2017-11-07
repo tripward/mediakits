@@ -1,0 +1,84 @@
+/* Home Partial */
+//////////////////
+
+
+///////////////////
+// VARIABLES
+///////////////////
+
+
+.home {
+    
+
+    
+    #hero-image {
+        background-color:black;
+        height:500px;
+        padding:40px 0;
+        background-image: url(/mediakits/includes/themes/mediakits/images/hero-image.jpg);
+        background-size:cover;
+        background-position:top center;
+        
+        h1 {
+            color:white;
+            margin:0;
+        }
+
+    }
+    
+    #call-to-action {
+        background-color:#d3e9f8;
+        
+        h2 {
+            margin:0;
+            font-size:52px;
+        }
+        
+        .subtitle {
+            font-size:24px;
+        }
+        
+        #example-image {
+            background:white;
+            height:300px;
+            margin-top:-80px;
+            margin-bottom:-80px;
+            margin-left:30px;
+            box-shadow:5px 5px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+    }
+    
+    #partners {
+        
+        background-color: #edf8ff;
+        
+        h2 {
+            text-align:center;
+            text-transform:uppercase;
+            color: #84b0d1;
+            margin:0 0 20px 0;
+        }
+        
+        ul {
+            list-style-type:none;
+            margin:0;
+            padding:0;
+            text-align:center;
+            
+            li {
+                display:inline-block;
+                color: #5f6366;
+                font-weight:bold;
+                font-size:24px;
+                
+                &:not(:last-child) {
+                    margin-right:20px;
+                }
+            }
+        }
+    }
+    
+    
+    
+}
