@@ -1,11 +1,11 @@
-<cfcomponent displayname="BaseController" persistent="false" accessors="true" hint="I provide common controller methods" output="false">
+<cfcomponent displayname="genericPayPalServices" persistent="false" extends="baseInfluencerService" accessors="true" hint="I provide common controller methods" output="false">
 
 	<cfproperty name="beanfactory" />
 	
 
 	<cffunction name="init" access="public" output="false" returntype="any">
 
-		<cfset setbeanfactory(application['framework.one'].factory) />
+		<!---<cfset setbeanfactory(application['framework.one'].factory) />--->
 
 		<cfreturn THIS />
 	</cffunction>

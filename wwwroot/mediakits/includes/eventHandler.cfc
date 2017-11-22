@@ -88,6 +88,7 @@ include '/mediakits_env/mappings.cfm';
 		// This is how you could register a 'model' directory in a plugin
 		arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/common/model/beans');
 		arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/model/beans');
+		arguments.m.globalConfig().registerModelDir('/plugins/mediakitsFunctions/influencer/model/services');
 		} catch (any e) {
 			WriteDump(var=e,top=2,label='in application start', abort=true);
 		} 
@@ -106,6 +107,7 @@ include '/mediakits_env/mappings.cfm';
 		<cfargument name="$" />
 		
 		<cfset session.influencerloggedIn = 0 />
+
 		
 	</cffunction>
 	
@@ -114,7 +116,7 @@ include '/mediakits_env/mappings.cfm';
 	<cffunction name="onSiteRequestStart">
 		<cfargument name="$" />
 		<cfset $ = arguments.$ />
-		
+		<!---<cfdump var="#application#" label="cgi" abort="true" top="3" />--->
 		<cfscript>
 			if (!structKeyExists(session,'influencerloggedIn')) {
 				session.influencerloggedIn = 0;

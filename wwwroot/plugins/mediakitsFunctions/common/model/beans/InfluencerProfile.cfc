@@ -15,19 +15,19 @@ component
 
 		property name="twitterUserName" datatype="varchar" required="true" length="50" default="";
 		property name="twitterPassword" datatype="varchar" length="50" default="";
-		property name="twitterFollowers" datatype="numeric" length="10" default="0";
+		property name="twitterFollowersCount" datatype="numeric" length="10" default="0";
 		property name="twitterLastUpdate" datatype="date";
 		property name="pintrestUserName" datatype="varchar" length="50" default="";
 		property name="pintrestPassword" datatype="varchar" length="50" default="";
-		property name="pintrestFollowers" datatype="numeric" length="10" default="0";
+		property name="pintrestFollowersCount" datatype="numeric" length="10" default="0";
 		property name="pintrestLastUpdate" datatype="date";
 		property name="instagramUserName" datatype="varchar" length="50" default="";
 		property name="instagramPassword" datatype="varchar" length="50" default="";
-		property name="instagramFollowers" datatype="numeric" length="10" default="0";
+		property name="instagramFollowersCount" datatype="numeric" length="10" default="0";
 		property name="instagramLastUpdate" datatype="date" ;
 		property name="FacebookUsername" datatype="varchar" length="50" default="";
 		property name="facebookPassword" datatype="varchar" length="50" default="";
-		property name="facebookFriends" datatype="numeric" length="10" default="0";
+		property name="facebookFriendsCount" datatype="numeric" length="10" default="0";
 		
 		property name="facebookBusinesspageLink" datatype="varchar" length="255" default="";
 		property name="facebookLastUpdate" datatype="date" ;
@@ -40,7 +40,7 @@ component
 		
 		property name="headshotFilename" datatype="varchar" length="100" default="";
 		property name="BaseInfluenceZipCode" datatype="varchar" length="11" default="";
-		property name="BaseinfluencerProfileadius" datatype="varchar" length="255" default="";
+		property name="BaseInfluencerRadius" datatype="varchar" length="255" default="";
 		property name="BaseInfluencelat" datatype="varchar" length="255" default="";
 		property name="BaseInfluencelong" datatype="varchar" length="255" default="";
 		
@@ -57,8 +57,27 @@ component
 		name="account"
 		fieldtype="one-to-one"
 		relatesTo="InfluencerAccount"
-		fkcolumn="influenceraccountid";
-		loadkey="influenceraccountid";
+		fkcolumn="influenceraccountid"
+		loadkey="influencerProfileid";
+		
+	property
+		name="InfluencerProfileToDemographics"
+		singularname="InfluencerProfileToDemographic" 
+		relatesTo="InfluencerProfileToDemographics"
+		linktable="custom_influencerprofiletodemographics"
+		fieldtype="one-to-many"
+		cascade="delete"
+		loadkey="influencerProfileid";
+		
+	property
+		name="InfluencerProfileToCategories"
+		singularname="InfluencerProfileToCategory" 
+		relatesTo="InfluencerProfileToCategories"
+		linktable="custom_InfluencerProfileToCategories" 
+		fieldtype="one-to-many"
+		cascade="delete"
+		loadkey="influencerProfileid";
+		
 		
 		
 	/*property
@@ -79,15 +98,7 @@ component
 		cascade="delete"
 		orderby="pressLinksid";*/
 		
-	/*property
-		name="demographics"
-		singularname="demographic"
-		cfc="demographics"
-		linktable="influencerProfileToDemographics" 
-		fieldtype="one-to-many"
-		loadkey="influencerProfileid"
-		cascade="delete"
-		orderby="sortorder";*/
+	
 		
 	/*property
 		name="categories"
@@ -146,8 +157,8 @@ component
 				this.settwitterPassword(application.su.encryptThis(arguments.submittedForm.twitterPassword));
 			}
 			
-			if (structKeyExists(arguments.submittedForm, 'twitterFollowers')) {
-				this.settwitterFollowers(arguments.submittedForm.twitterFollowers);
+			if (structKeyExists(arguments.submittedForm, 'twitterFollowersCount')) {
+				this.settwitterFollowersCount(arguments.submittedForm.twitterFollowersCount);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'twitterLastUpdate')) {
@@ -164,8 +175,8 @@ component
 				this.setpintrestPassword(application.su.encryptThis(arguments.submittedForm.pintrestPassword));
 			}
 			
-			if (structKeyExists(arguments.submittedForm, 'pintrestFollowers')) {
-				this.setpintrestFollowers(arguments.submittedForm.pintrestFollowers);
+			if (structKeyExists(arguments.submittedForm, 'pintrestFollowersCount')) {
+				this.setpintrestFollowersCount(arguments.submittedForm.pintrestFollowersCount);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'pintrestLastUpdate')) {
@@ -182,8 +193,8 @@ component
 				this.setinstagramPassword(application.su.encryptThis(arguments.submittedForm.instagramPassword));
 			}
 			
-			if (structKeyExists(arguments.submittedForm, 'instagramFollowers')) {
-				this.setinstagramFollowers(arguments.submittedForm.instagramFollowers);
+			if (structKeyExists(arguments.submittedForm, 'instagramFollowersCount')) {
+				this.setinstagramFollowersCount(arguments.submittedForm.instagramFollowersCount);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'instagramLastUpdate')) {
@@ -201,8 +212,8 @@ component
 				this.setfacebookPassword(application.su.encryptThis(arguments.submittedForm.facebookPassword));
 			}
 			
-			if (structKeyExists(arguments.submittedForm, 'facebookFriends')) {
-				this.setfacebookFriends(arguments.submittedForm.facebookFriends);
+			if (structKeyExists(arguments.submittedForm, 'facebookFriendsCount')) {
+				this.setfacebookFriendsCount(arguments.submittedForm.facebookFriendsCount);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'facebookBusinesspageLink')) {
@@ -241,8 +252,8 @@ component
 				this.setBaseInfluenceZipCode(arguments.submittedForm.BaseInfluenceZipCode);
 			}
 		
-			if (structKeyExists(arguments.submittedForm, 'BaseinfluencerProfileadius')) {
-				this.setBaseinfluencerProfileadius(arguments.submittedForm.BaseinfluencerProfileadius);
+			if (structKeyExists(arguments.submittedForm, 'BaseInfluencerRadius')) {
+				this.setBaseInfluencerRadius(arguments.submittedForm.BaseInfluencerRadius);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'BaseInfluencelat')) {

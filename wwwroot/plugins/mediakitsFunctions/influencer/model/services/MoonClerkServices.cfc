@@ -1,8 +1,4 @@
-<cfcomponent displayname="moonclerkservices"  persistent="false" accessors="true" hint="" output="false">
-
-	<cfproperty name="beanfactory" />
-
-	<cfproperty name="dsn" type="string" default="dodnavy_cms"/>
+<cfcomponent displayname="moonclerkservices" extends="baseInfluencerService" persistent="false" accessors="true" hint="" output="false">
 
 
 	<!---todo: not sure this is needed, i beleive this is hold over from before i got DI1 working --->
@@ -64,8 +60,8 @@
 
 	<cffunction name="init" access="public" output="false" returntype="any">
 
-		<cfset setbeanfactory(application['framework.one'].factory) />
-		<cfset this.configure()>
+		<!---<cfset setbeanfactory(application['framework.one'].factory) />
+		<cfset this.configure()>--->
 
 		<cfreturn THIS />
 	</cffunction>

@@ -15,8 +15,8 @@
 					)#
 					#$.dspObjects(2)#
 				</section>
-				<aside class="col-lg-3 col-md-3 col-sm-4 col-xs-12 sidebar">
-					#$.dspObjects(3)#
+				<aside style="margin: 50px 0 0 0;" class="col-lg-3 col-md-3 col-sm-4 col-xs-12 sidebar">
+					#$.dspObjects(3)#hhhhhhhhhhhhhhhhhhhhhh
 				</aside>
 			</div><!--- /.row --->
 		</div><!--- /.container --->

@@ -1,4 +1,4 @@
-<cfcomponent displayname="BaseController" persistent="false" accessors="true" hint="I provide common controller methods" output="false">
+<cfcomponent displayname="payPalServices" persistent="false" extends="baseInfluencerService" accessors="true" hint="I provide common controller methods" output="false">
 
 
 	<cffunction name="default" access="public" returntype="any">

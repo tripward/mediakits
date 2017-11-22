@@ -1,4 +1,4 @@
-component persistent="false" accessors="true" output="false" extends="baseService" {
+component persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
 
 	property name='beanfactory';
 	

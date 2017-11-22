@@ -1,4 +1,4 @@
-<cfcomponent displayname="paymentGatewayService" persistent="false" accessors="true" hint="" output="false"><!--- extends="main"--->
+<cfcomponent displayname="paymentGatewayService" extends="baseInfluencerService" persistent="false" accessors="true" hint="" output="false"><!--- extends="main"--->
 
 	<cffunction name="init" access="public" output="false" returntype="any">
 

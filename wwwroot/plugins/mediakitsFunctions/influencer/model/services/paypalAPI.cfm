@@ -1,4 +1,4 @@
-<cfcomponent displayname="searchServices" persistent="false" accessors="true" hint="" output="false">
+<cfcomponent displayname="paypalAPI" persistent="false"  extends="baseInfluencerService" accessors="true" hint="" output="false">
 
 	<cfproperty name="beanfactory" />
 
