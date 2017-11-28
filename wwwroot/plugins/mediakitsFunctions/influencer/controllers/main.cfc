@@ -216,6 +216,25 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 		variables.InfluencerProfileService.updateDemographics(profile=rc.influencerAccount.getProfile(),newDemographics=rc.demographics);
 		variables.InfluencerProfileService.updateCategories(profile=rc.influencerAccount.getProfile(),Categories=rc.categories);
 		
+		if (structKeyExists(rc,'headshotFilename') AND len(rc.headshotFilename)) {
+			WriteDump(var=rc,top=2,label='rccccc', abort=false);
+			
+			
+			rc.uploadedFile = fileUpload( getTempDirectory(), "headshotFilename", "image/jpeg,image/pjpeg", "MakeUnique" );
+			//todo: eh: around file 
+
+			/*WriteDump(var='#getTempDirectory()##rc.uploadedFile.serverFile#',top=2,label='goo', abort=true);*/
+			
+			if (len(trim(rc.influencerAccount.getProfile().getheadshotFilename())) AND fileExists('#application.mediaConfig.headShotAbsolutePath#\#rc.influencerAccount.getProfile().getheadshotFilename()#')) {
+				fileDelete('#application.mediaConfig.headShotAbsolutePath#\#rc.influencerAccount.getProfile().getheadshotFilename()#');
+			}
+			
+			
+			fileMove("#getTempDirectory()##rc.uploadedFile.serverFile#", application.mediaConfig.headShotAbsolutePath);
+			
+			rc.profile.setheadshotFilename('#rc.uploadedFile.serverFile#');
+		}
+		
 		
 		
 		

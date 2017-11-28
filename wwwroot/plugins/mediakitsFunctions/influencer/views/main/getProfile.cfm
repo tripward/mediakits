@@ -52,6 +52,7 @@ this is the profile in getprofile
 		<div id="Headshot" class="form-group">
 			<label for="headshotFilename">File</label>
 			<input id="headshotFilename" class="form-control" type="file" size="20" name="headshotFilename" value="#rc.influencerAccount.getProfile().getheadshotFilename()#" />
+			<div class="">#rc.influencerAccount.getProfile().getheadshotFilename()#</div>
 		</div>
 		
 		<h4>General Info</h4>
@@ -130,9 +131,9 @@ this is the profile in getprofile
 				<div><input id="demographics_#listFirst(local.myDemo,'|')#"<cfif listFindNoCase(rc.currentInfluencerDemographics,listFirst(local.myDemo,'|'))>checked=checked </cfif> <!---class="form-control"---> type="checkbox" name="demographics" value="#listFirst(local.myDemo,'|')#" /> #listLast(local.myDemo,'|')#</div>
 			</cfloop>
 			<a href="foo" id='demographics_EditLink'>Edit</a>
-			<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery()#" label="cgi" abort="false" top="3" />
+			<!---<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery()#" label="cgi" abort="false" top="3" />
 			<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToDemographics()#" label="cgi" abort="false" top="3" />
-			<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getArray()#" label="cgi" abort="false" top="3" />
+			<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getArray()#" label="cgi" abort="false" top="3" />--->
 			
 		</div>
 		
@@ -145,7 +146,7 @@ this is the profile in getprofile
 			</cfloop>
 			<a href="foo" id='categories_EditLink'>Edit</a>
 			
-			<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getArray()#" label="cgi" abort="false" top="3" />
+			<!---<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getArray()#" label="cgi" abort="false" top="3" />--->
 		</div>
 		
 		<h4>Awards</h4>
