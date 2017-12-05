@@ -2,12 +2,24 @@
 	<header>
 		
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-3">
                 <h1>Media_Kits</h1>
             </div>
-            <div class="col-md-6 align-right">
-                <span id="logged-in-name">Welcome, Cat.</span>
-                <a class="button" id="log-up-btn" href="##">Log out</a>
+            <div class="col-sm-9 align-right">
+                <span id="logged-in-name">Welcome, Patrick</span>
+                <nav>
+                    <ul>
+                        <li class="active">
+                            <a href="##">Your Profile</a>
+                        </li>
+                        <li>
+                            <a href="##">Generate Media Kits</a>
+                        </li>
+                        <li>
+                            <a href="##">Log out</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
         </div>
