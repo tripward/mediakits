@@ -54,6 +54,9 @@ this is the profile in getprofile
 			<input id="headshotFilename" class="form-control" type="file" size="20" name="headshotFilename" value="#rc.influencerAccount.getProfile().getheadshotFilename()#" />
 			<div class="">#rc.influencerAccount.getProfile().getheadshotFilename()#</div>
 		</div>
+		<cfif len(rc.influencerAccount.getProfile().getheadshotFilename())>
+			<img src="/mediaFiles/headshots/#rc.influencerAccount.getProfile().getheadshotFilename()#">
+		</cfif>
 		
 		<h4>General Info</h4>
 		<div id="general" class="form-group">

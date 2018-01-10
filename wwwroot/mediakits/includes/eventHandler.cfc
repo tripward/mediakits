@@ -75,7 +75,7 @@ onGlobalThreatDetect
 include '/mediakits_env/requestSettings.cfm';
 include '/mediakits_env/mappings.cfm';
 
-
+/*WriteDump(var=this,top=2,label='goo', abort=true);*/
 
 	public any function onApplicationLoad(m) {
 
