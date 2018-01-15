@@ -1,0 +1,63 @@
+main {
+    background-color:#ececec;    
+    padding-top:40px;
+}
+
+#identity {
+    
+    max-width:100%;
+    background:#3690cc;
+    padding:0;
+    padding-bottom:20px;
+    margin-bottom: 20px;
+    
+    #identity_image {
+        background:url(../images/profile-picture.jpg);
+        background-size:cover;
+        background-position:center center;
+        height:300px;
+        display:flex;
+        flex-direction:column;
+        justify-content: flex-end;
+        padding:20px;
+        
+        h2, p {
+            color:white;
+            margin:0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+        
+        h2 {
+            font-size: 28px;
+        }
+        
+        p {
+            font-size: 16px;
+        }
+        
+    }
+    
+    #identity-statistics {
+        margin: 20px 20px 0px 20px;
+        
+        & td {
+            color:white;
+            padding:5px 7px; 
+            font-size:18px;
+        }
+        
+        
+    }
+    
+    
+}
+
+
+
+
+
+.statistic {
+    font-weight:bold;    
+    text-shadow: 1px 1px 1px black;
+}
+

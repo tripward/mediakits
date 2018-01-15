@@ -14,13 +14,13 @@
                     </div>
                     <div class="col-md-6 align-right">
                         <a class="highlight-bg button" id="sign-up-btn" href="##">Sign up</a>
-                        <a class="button" id="log-up-btn" href="##">Log in</a>
+                        <a id="log-in-btn" href="##">Log in</a>
                     </div>
                 </div><!--- /.row --->	             
             </div>
             
             <section id="call-to-action">
-                <div class=                     "row">
+                <div class="row">
                     <div class="col-md-8">
                         <h2>Have a blog?</h2>
                         <p class="subtitle">Let's get your name out there.</p>

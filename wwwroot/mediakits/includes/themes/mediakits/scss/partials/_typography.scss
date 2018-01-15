@@ -30,8 +30,8 @@
 
 * {
     font-family: "Gilroy", Calibri, Helvetica, Arial, sans-serif;
-    margin:none;
-    padding:none;
+    margin:0;
+    padding:0;
 }
 
 h1, h2, h3, h4, h5 {
@@ -40,6 +40,7 @@ h1, h2, h3, h4, h5 {
 
 h2 {
     color: #7a59a5;
+    margin-top:0;
 }
 
 a {
@@ -57,29 +58,16 @@ p {
 }
 
 
-/////////////////
-// BUTTONS
-/////////////////
-
-a.button {
-    padding:10px;
-    color:white;
-    font-weight:normal;
-    
-    &:not(:last-child) {
-        margin-right:20px;
-    }
-    
-
-    &.highlight-bg {
-        background:#ff5880;
-        font-weight:bold;
-    }
-    
-}
 
 
 /////////////////
 // MODIFIERS
 /////////////////
 
+
+// removes padding from bootstrap columns
+
+[class*="col-"] {
+    padding-left: 0 !important;
+    padding-right:0 !important;
+}
