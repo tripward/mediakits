@@ -29,32 +29,33 @@
 /////////////////
 
 * {
-    font-family: "Gilroy", Calibri, Helvetica, Arial, sans-serif;
+    font-family: $text-font;
     margin:0;
     padding:0;
 }
 
 h1, h2, h3, h4, h5 {
+    font-family:$header-font;
     font-weight:bold;    
 }
 
 h2 {
-    color: #7a59a5;
+    color: $primary-color;
     margin-top:0;
 }
 
 a {
-    color:#ff5880;
+    color:$link-color;
     font-weight:bold;
 }
 
 a:hover {
-    color: #bb2d4f;
+    color: $link-hover-color;
 }
 
 p {
     font-size:18px;
-    color: #265f7d;
+    color: $text-color;
 }
 
 
@@ -67,7 +68,7 @@ p {
 
 // removes padding from bootstrap columns
 
-[class*="col-"] {
-    padding-left: 0 !important;
-    padding-right:0 !important;
-}
+//[class*="col-"] {
+//    padding-left: 0 !important;
+//    padding-right:0 !important;
+//}
