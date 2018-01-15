@@ -9,13 +9,14 @@
 		<main>
             <div id="hero-image">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12" id="header-items">
                         <h1>Media_Kits</h1>
+                        <div class="align-right">
+                            <a class="highlight-bg button" id="sign-up-btn" href="##">Sign up</a>
+                            <a id="log-in-btn" href="##">Log in</a>
+                        </div>
                     </div>
-                    <div class="col-md-6 align-right">
-                        <a class="highlight-bg button" id="sign-up-btn" href="##">Sign up</a>
-                        <a id="log-in-btn" href="##">Log in</a>
-                    </div>
+                    
                 </div><!--- /.row --->	             
             </div>
             
@@ -33,21 +34,16 @@
                 </div>
             </section>
             
-            <section>                
+            <section id="what-we-do">                
                 <div class="row">
                     <div class="col-md-12">
-                        <div>
+                        <div class="mission">
                             <h2>We match influencers with brands.</h2>
                             <p>Verified Influencers can apply to campaigns sponsored by brands on our network - or be carefully matched to the campaigns that best fit the target audience and demographic.<br/>
                             <a href="##">Find your fit &##187;</a></p>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    
-                    <div class="col-md-12">
-                        <div>
+                   
+                        <div class="mission">
                             <h2>Find the blogs you're looking for.</h2>
                             <p>Search our database and find Influencers by their location, their content, how many people see their posts, or by platform. Filtering by reach allows you to find an Influencer at the size you're looking for. You can also filter to find those with high engagement and interactions.<br/>
                             <a href="##">Start searching &##187;</a></p>

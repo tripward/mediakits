@@ -20,11 +20,13 @@
 	<!--- Bootstrap core CSS --->
 	<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/assets/bootstrap/css/bootstrap.min.css">
 
-	<!--- Font Awesome --->
+	<!--- Fonts --->
 	<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/assets/font-awesome/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 	<!--- MediaKits Stylesheet --->
 	<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/scss/styles.css">
+    
 
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

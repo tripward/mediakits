@@ -6,13 +6,11 @@
     
     label {
         position:absolute;
-        font-family: Calibri;
         font-size:14px;
         pointer-events:none;
         top:15px;
         transition:all 0.1s;
         opacity:1;
-        font-family: Gilroy;
         color: gray;
         font-weight:normal;
     }
@@ -35,7 +33,6 @@
 
 input[type="text"] {
     display:block;
-    font-family: Calibri;
     font-size:14px;
     background: transparent;
     border:0;
@@ -43,7 +40,6 @@ input[type="text"] {
     outline: 0;
     width: 100%;
     margin-bottom:20px;
-    font-family: Gilroy;
 }
 
 
