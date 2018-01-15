@@ -1,6 +1,6 @@
 <!---<cfdump var="#rc#" label="rc.errors" abort="true" top="3" />--->
-<cfdump var="#rc.errors#" label="rc.errors" abort="false" top="3" />
-<cfdump var="#rc.messages#" label="rc.messages" abort="false" top="3" />
+<!---<cfdump var="#rc.errors#" label="rc.errors" abort="false" top="3" />
+<cfdump var="#rc.messages#" label="rc.messages" abort="false" top="3" />--->
 <cfoutput>
 	
 	<cfif structKeyExists(rc, 'errors') AND !structIsEmpty(rc.errors)>

@@ -7,33 +7,12 @@ Licensed under the Apache License, Version v2.0
 http://www.apache.org/licenses/LICENSE-2.0
 
 */
-component persistent="false" accessors="true" output="false" extends="controller" displayname="InfluencerMainController" {
+component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.common.controllers.basecontroller" displayname="InfluencerMainController" {
 
-	property name='framework';
-	property name='registrationService';
-	property name='influencerService';
-	property name='influencerAccountService';
-	property name='InfluencerSubscriptionService';
-	property name='InfluencerSubscriptionToAccountService';
-	property name='InfluencerProfileService';
-	property name='paymentGatewayService';
-	property name='twitterService';
-	property name='pintrestService';
-	property name='InstagramService';
-	property name='faceBookService';
-
-	// ********************************* PAGES *******************************************
+	
 
 	public void function before(required struct rc) {
-		param name='rc.errors' default='#structNew()#';
-		param name='rc.messages' default='#arraynew(1)#';
-	}
-	
-	public void function default(required struct rc) {
-		param name='rc.messages' default='';
-		/*rc.registrations = variables.registrationService.list();*/
-		/*message = "funning";*/
-		/*variables.fw.redirect(action='influencer:main.justfun', preserve='message');*/
+		SUPER.before(rc);
 	}
 
 	public void function getSubScribeForm(required struct rc) {
@@ -142,7 +121,7 @@ component persistent="false" accessors="true" output="false" extends="controller
 			
 			lock name="lockName" timeout="3" {
 				session.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
-			
+				session.influencerAccountID = session.influencerAccount.getID(); 
 			
 				if (session.influencerAccount.getIsNew()) {
 					structInsert(rc.errors,'noaccount','No Account Exists with that email address and password');
@@ -210,6 +189,17 @@ component persistent="false" accessors="true" output="false" extends="controller
 		
 		if (structKeyExists(session,'influencerAccount')) {
 			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
+			/*WriteDump(var=rc.influencerAccount..getProfile(),top=2,label='goo', abort=true);*/
+			rc.demographics = variables.demograpphicsService.getOptionList();
+			/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
+			rc.categories = variables.categoryService.getOptionList();
+			
+			rc.InfluencerdemoQuery = rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery();
+			/*WriteDump(var=rc.InfluencerdemoQuery,top=2,label='goo', abort=true);*/
+			rc.currentInfluencerDemographics = valueList(rc.InfluencerdemoQuery.demographicID);
+			rc.InfluencerCatQuery = rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getQuery();
+			rc.currentInfluencerCategories = valueList(rc.InfluencerCatQuery.categoryid);
+	
 		} else {
 			location("/log-in/", false, '302');abort;
 		}
@@ -217,16 +207,54 @@ component persistent="false" accessors="true" output="false" extends="controller
 	}
 	
 	public void function persistProfile(required struct rc) {
-		WriteDump(var=rc.TwitterUsername,top=1,label='goo', abort=false);
+		/*WriteDump(var=rc.TwitterUsername,top=1,label='goo', abort=false);*/
 		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
 		
 		rc.profile = rc.influencerAccount.getProfile();
 		rc.profile = rc.profile.populateFromForm(rc);
 		
+		variables.InfluencerProfileService.updateDemographics(profile=rc.influencerAccount.getProfile(),newDemographics=rc.demographics);
+		variables.InfluencerProfileService.updateCategories(profile=rc.influencerAccount.getProfile(),Categories=rc.categories);
+		
+		if (structKeyExists(rc,'headshotFilename') AND len(rc.headshotFilename)) {
+			WriteDump(var=rc,top=2,label='rccccc', abort=false);
+			
+			
+			rc.uploadedFile = fileUpload( getTempDirectory(), "headshotFilename", "image/jpeg,image/pjpeg", "MakeUnique" );
+			//todo: eh: around file 
+
+			/*WriteDump(var='#getTempDirectory()##rc.uploadedFile.serverFile#',top=2,label='goo', abort=true);*/
+			
+			if (len(trim(rc.influencerAccount.getProfile().getheadshotFilename())) AND fileExists('#application.mediaConfig.headShotAbsolutePath#\#rc.influencerAccount.getProfile().getheadshotFilename()#')) {
+				fileDelete('#application.mediaConfig.headShotAbsolutePath#\#rc.influencerAccount.getProfile().getheadshotFilename()#');
+			}
+			
+			
+			fileMove("#getTempDirectory()##rc.uploadedFile.serverFile#", application.mediaConfig.headShotAbsolutePath);
+			
+			rc.profile.setheadshotFilename('#rc.uploadedFile.serverFile#');
+		}
+		
+		
+		
+		
+		
+		/*myFile = expandPath( "somefile.txt" );
+		data = "I'm going to create a file object";
+		FileWrite( "fileObj", data );
+		newFileObj = FileRead( "fileObj" );
+		writeDump(var=newFileObj);*/ // OR write direct to file myFile = expandPath( "somefile.txt" ); data = "I'm going to write to direct to file"; FileWrite(myFile, data);
+		
+		
+		
+		
 		rc.profile = rc.profile.validate();
 		if (structIsEmpty(rc.profile.getErrors())) {
 			rc.profile.save();
 			rc.message = arrayAppend(rc.messages, 'profile Saved');
+		} else {
+			WriteDump(var= rc.profile,top=2,label='goo', abort=true);	
+		
 		}
 		lock name="lockName" timeout="3" {
 			session.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);

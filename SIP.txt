@@ -1,0 +1,5 @@
+create cf mapping /mediakitsEnv > D:\workspace_kelper\mediakits\windows_vm\website\wwwroot\environmentConfig\trip
+
+baseInfluencerService
+
+https://www.pinterest.com/tripward/followers/

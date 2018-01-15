@@ -1,12 +1,17 @@
 <cfscript>
-include '/environmentConfig/requestBaseSettings.cfm';
+	include '/environmentConfig/requestBaseSettings.cfm';
+	
+	//will reload the plug in arch on every request, use during dev
+	request.isReloadOnEveryRequest = TRUE;
 
-request.isReloadOnEveryRequest = TRUE;
+	//pathing section
+	request.mediaFilesAbsolutePath = 'C:\vagrant\mediaFiles';
+	
+	//debugging section
+	request.isShowErrorDebugging = TRUE;
+	request.isShowSecurityDebugging = TRUE;
+	request.isShowConfigDisplay = TRUE;
 
-//used throught the site on whether to enable full deubbing or just min
-request.isShowErrorDebugging = TRUE;
-
-request.isDisplayDebug = 0;
 </cfscript>
 
 

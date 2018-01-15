@@ -7,7 +7,7 @@ Licensed under the Apache License, Version v2.0
 http://www.apache.org/licenses/LICENSE-2.0
 
 */
-component persistent="false" accessors="true" output="false" extends="baseService" {
+component persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
 
 	property name='beanfactory';
 	
