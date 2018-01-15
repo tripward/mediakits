@@ -21,20 +21,34 @@
     #hero-image {
         background-color:black;
         height:500px;
-        padding:40px 0;
+        padding:10px 0 40px 0;
         background-image: url(/mediakits/includes/themes/mediakits/images/hero-image.jpg);
         background-size:cover;
         background-position:top center;
         
-        h1 {
-            color:white;
-            margin:0;
+        #header-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap:wrap;
+            
+
+            h1 {
+                color:white;
+                margin:0;
+                margin-bottom:15px
+            }
+            
+            div {
+                margin-bottom:15px;
+            }
         }
+        
 
     }
     
     #call-to-action {
-        background-color:#d3e9f8;
+        background-color:$secondary-background-color;
         
         h2 {
             margin:0;
@@ -56,9 +70,17 @@
         
     }
     
+    #what-we-do {
+        background:white;
+        
+        .mission:not(:last-child) {
+            margin-bottom:30px;
+        }
+    }
+    
     #partners {
         
-        background-color: #edf8ff;
+        background-color: rgba($secondary-background-color,0.4);
         
         h2 {
             text-align:center;
@@ -71,7 +93,7 @@
             list-style-type:none;
             margin:0;
             padding:0;
-            text-align:center;
+            text-align:center; 
             
             li {
                 display:inline-block;
@@ -88,4 +110,16 @@
     
     
     
+}
+
+@media screen and (max-width:991px) {
+    #example-image {
+        display: block;
+        margin: 30px auto 0 auto !important;
+    }
+    
+    .copyright {
+        text-align: left !important;
+        margin-top: 50px !important;
+    }
 }
