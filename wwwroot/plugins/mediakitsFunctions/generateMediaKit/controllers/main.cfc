@@ -19,8 +19,15 @@ component displayname="InfluencerMainController" persistent="false" accessors="t
 	
 	public void function default(required struct rc) {
 		
-		
+		/*param rc.mediakitTemplate=1;*/
+		param name="rc.mediakitTemplate" default="1";
+		WriteDump(var=variables,top=2,label='goo', abort=true);
 		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		rc.demographics = variables.demograpphicsService.getOptionList();
+			/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
+			rc.categories = variables.categoryService.getOptionList();
+		
+		
 		
 		
 		

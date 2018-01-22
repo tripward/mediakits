@@ -15,19 +15,20 @@ component
 
 		property name="twitterUserName" datatype="varchar" required="true" length="50" default="";
 		property name="twitterPassword" datatype="varchar" length="50" default="";
-		property name="twitterFollowersCount" datatype="numeric" length="10" default="0";
+		property name="twitterFollowersCount" type="integer" datatype="integer" length="10" default="0";
 		property name="twitterLastUpdate" datatype="date";
 		property name="pintrestUserName" datatype="varchar" length="50" default="";
 		property name="pintrestPassword" datatype="varchar" length="50" default="";
-		property name="pintrestFollowersCount" datatype="numeric" length="10" default="0";
+		property name="pintrestFollowersCount" type="integer" datatype="integer" length="10" default="0";
 		property name="pintrestLastUpdate" datatype="date";
 		property name="instagramUserName" datatype="varchar" length="50" default="";
 		property name="instagramPassword" datatype="varchar" length="50" default="";
-		property name="instagramFollowersCount" datatype="numeric" length="10" default="0";
+		property name="instagramFollowersCount" type="integer" datatype="integer" length="10" default="0";
 		property name="instagramLastUpdate" datatype="date" ;
 		property name="FacebookUsername" datatype="varchar" length="50" default="";
 		property name="facebookPassword" datatype="varchar" length="50" default="";
-		property name="facebookFriendsCount" datatype="numeric" length="10" default="0";
+		property name="facebookFriendsCount" type="integer" datatype="integer" length="10" default="0";
+		property name="mediakitTemplateID" type="integer" datatype="integer" length="10" default="1";
 		
 		property name="facebookBusinesspageLink" datatype="varchar" length="255" default="";
 		property name="facebookLastUpdate" datatype="date" ;
@@ -262,6 +263,10 @@ component
 			
 			if (structKeyExists(arguments.submittedForm, 'BaseInfluencelong')) {
 				this.setBaseInfluencelong(arguments.submittedForm.BaseInfluencelong);
+			}
+			
+			if (structKeyExists(arguments.submittedForm, 'mediakitTemplateID')) {
+				this.setmediakitTemplateID(arguments.submittedForm.mediakitTemplateID);
 			}
 			
 			/*WriteDump(var=THIS,top=2,label='goo', abort=true);*/

@@ -58,6 +58,14 @@ this is the profile in getprofile
 			<img src="/mediaFiles/headshots/#rc.influencerAccount.getProfile().getheadshotFilename()#">
 		</cfif>
 		
+		<h4>Media Template</h4>
+		<div id="general" class="form-group">
+			<label for="mediakitTemplateID">Media Template</label>
+			<select name="mediakitTemplateID" size="1">
+				<option value="1">Headshot Top Left</option>
+			</select>
+		</div>
+		
 		<h4>General Info</h4>
 		<div id="general" class="form-group">
 			<label for="firstname">First Name2</label>

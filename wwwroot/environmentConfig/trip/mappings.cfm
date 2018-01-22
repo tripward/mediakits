@@ -1,6 +1,6 @@
 <cfscript>
 
-	request.mappings["/mediaFiles"] = "C:\vagrant\mediaFiles";
+	THIS.mappings["/mediaFiles"] = "C:\mediaFiles";
 	
 
 </cfscript>
