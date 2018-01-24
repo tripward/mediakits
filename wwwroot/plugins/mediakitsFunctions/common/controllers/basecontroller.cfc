@@ -45,6 +45,20 @@ component persistent="false" accessors="true" output="false" extends="mura.cfobj
 			param name='rc.messages' default='#arraynew(1)#';
 		}
 
+		public any function getDemographicsServices() {
+			return application.serviceFactory.getBean("demograpphicsService");
+		}
+		
+		public any function getCategoryServices() {
+			return application.serviceFactory.getBean("categoryService");
+		}
+		
+		public any function getInfluencerStatsServices() {
+			return application.serviceFactory.getBean("InfluencerStatsService");
+		}
+		
+		
+
 		// public any function before(required struct rc) {
 		// 	if ( !getFW().isFrontEndRequest() ) {
 		// 		getFW().redirect(action='admin:main.default');

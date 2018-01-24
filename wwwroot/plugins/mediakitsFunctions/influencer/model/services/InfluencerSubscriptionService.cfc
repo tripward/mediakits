@@ -1,9 +1,11 @@
-component persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
+component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" {
 
 	property name='beanfactory';
-	property name='ObjectType' default="InfluencerSubscription";
-	property name='iteratorVariableName' default="InfluencerSubscriptions";
-	property name='ObjectIDProp' default="Subscriptionid";
+	property name='ObjectType' type="string" default="InfluencerSubscription";
+	property name='iteratorVariableName' type="string" default="InfluencerSubscriptions";
+	property name='ObjectIDProp' type="string" default="Subscriptionid";
+	property name='tablename' type="string" default="custom_influencersubscriptions";
+	
 	
 	public any function init() {
 		SUPER.init();

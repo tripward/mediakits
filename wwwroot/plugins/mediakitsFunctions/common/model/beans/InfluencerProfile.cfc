@@ -79,17 +79,12 @@ component
 		cascade="delete"
 		loadkey="influencerProfileid";
 		
+	property name="awards" fieldtype="one-to-many" relatesto="awards" cascade="delete";
+	property name="presslinks" fieldtype="one-to-many" relatesto="presslinks" cascade="delete";
 		
 		
-	/*property
-		name="awards"
-		singularname="awards"
-		cfc="influencerProfileAwards"
-		fieldtype="one-to-many"
-		loadkey="influencerProfileid"
-		cascade="delete"
-		orderby="awardsid";*/
 		
+
 	/*property
 		name="presslinks"
 		singularname="presslink"
@@ -100,20 +95,6 @@ component
 		orderby="pressLinksid";*/
 		
 	
-		
-	/*property
-		name="categories"
-		cfc="categories"
-		linktable="custom_influencerProfileToCategories"
-		loadkey="influencerProfileid"
-		fieldType="many-to-many"
-		type="array"
-		fkcolumn="categoryid"
-		cascade="all-delete-orphan"
-		singularname="category"
-		orderby="sort_order";*/
-
-
 		// Custom Validations
 		public any function validate() {
 			var obj = super.validate();

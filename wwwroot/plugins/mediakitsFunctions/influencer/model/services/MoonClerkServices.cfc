@@ -1,4 +1,4 @@
-<cfcomponent displayname="moonclerkservices" extends="baseInfluencerService" persistent="false" accessors="true" hint="" output="false">
+<cfcomponent displayname="moonclerkservices" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" persistent="false" accessors="true" hint="" output="false">
 
 
 	<!---todo: not sure this is needed, i beleive this is hold over from before i got DI1 working --->

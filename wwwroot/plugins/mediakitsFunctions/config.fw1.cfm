@@ -34,7 +34,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 	variables.framework.diConfig = {};
 	variables.framework.diEngine = 'di1';
 	variables.framework.diOverrideAllowed = false;
-	variables.framework.diLocations = ['model', 'controllers', 'beans', 'services','/plugins/mediakitsFunctions/model/services/','/plugins/mediakitsFunctions/common/model/services/','/plugins/mediakitsFunctions/influencer/model/beans/','/plugins/mediakitsFunctions/influencerSocialMediaStats/model/services/','/plugins/mediakitsFunctions/influencerSocialMediaStats/model/beans/'];
+	variables.framework.diLocations = ['model', 'controllers', 'beans', 'services','/plugins/mediakitsFunctions/model/services/','/plugins/mediakitsFunctions/common/model/services/','/plugins/mediakitsFunctions/influencer/model/services/','/plugins/mediakitsFunctions/influencer/model/beans/','/plugins/mediakitsFunctions/influencerSocialMediaStats/model/services/','/plugins/mediakitsFunctions/influencerSocialMediaStats/model/beans/'];
 	variables.framework.diComponent = 'mura.bean.ioc';
 
 

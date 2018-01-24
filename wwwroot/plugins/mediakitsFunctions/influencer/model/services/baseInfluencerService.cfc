@@ -14,7 +14,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 	}
 	
 	public any function getIterator() {
-		/*WriteDump(variables['#variables.ObjectType#s']);abort;*/
+		/*WriteDump(variables);abort;*/
 		try {if (!structkeyExists(variables,'#variables.iteratorVariableName#')) {        
 			variables.myIterator = variables.getFeed('#variables.ObjectType#').where().getIterator();
 		}} catch (any e) {

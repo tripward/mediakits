@@ -1,9 +1,10 @@
-component persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
+component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" {
 
 	property name='beanfactory';
-	property name='ObjectType' default="category";
-	property name='iteratorVariableName' default="categories";
-	property name='ObjectIDProp' default="categoryid";
+	property name='ObjectType' type="string" default="category";
+	property name='iteratorVariableName' type="string" default="categories";
+	property name='ObjectIDProp' type="string" default="categoryid";
+	property name='tablename' type="string" default="custom_categories";
 	
 	public any function init() {
 		SUPER.init();

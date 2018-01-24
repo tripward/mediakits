@@ -1,12 +1,10 @@
-component persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
+component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" {
 
 	property name='beanfactory';
-	
-	variables.ObjectType = 'InfluencerAccount';
-	variables.iteratorVariableName = 'InfluencerAccounts';
-	variables.tableName = 'custom_InfluencerAccounts';
-	variables.ObjectIDProp = 'influenceraccountid';
-	variables.ObjectType = 'InfluencerAccount';
+	property name='ObjectType' type="string" default="InfluencerAccount";
+	property name='iteratorVariableName' type="string" default="InfluencerAccounts";
+	property name='ObjectIDProp' type="string" default="influenceraccountid";
+	property name='tablename' type="string" default="custom_InfluencerAccounts";
 
 	public any function init() {
 		SUPER.init();

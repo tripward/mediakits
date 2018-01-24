@@ -186,13 +186,12 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 	}
 	
 	public void function getProfile(required struct rc) {
-		
 		if (structKeyExists(session,'influencerAccount')) {
 			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
-			/*WriteDump(var=rc.influencerAccount..getProfile(),top=2,label='goo', abort=true);*/
-			rc.demographics = variables.demograpphicsService.getOptionList();
+
+			rc.demographics = variables.getDemographicsServices().getOptionList();
 			/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
-			rc.categories = variables.categoryService.getOptionList();
+			rc.categories = variables.getCategoryServices().getOptionList();
 			
 			rc.InfluencerdemoQuery = rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery();
 			/*WriteDump(var=rc.InfluencerdemoQuery,top=2,label='goo', abort=true);*/

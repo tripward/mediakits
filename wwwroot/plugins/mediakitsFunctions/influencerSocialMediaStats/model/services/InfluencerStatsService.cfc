@@ -6,14 +6,14 @@ Copyright 2010-2017 Stephen J. Withington, Jr.
 Licensed under the Apache License, Version v2.0
 http://www.apache.org/licenses/LICENSE-2.0
 
-*//* extends="baseInfluencerService"*/
+*//* extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService"*/
 component displayname="InfluencerStatsService" persistent="false" accessors="true" output="false" {
 	
 	/*public void function init() {
 		SUPER.init();
 	}*/
 	
-	public struct function getAllStats(required struct influencerInfo) {
+	public struct function getAllStats(required any influencerProfileID) {
 		
 		local.socialMediaStats = {};
 		local.socialMediaStats.twitterFollowersCount = 5;

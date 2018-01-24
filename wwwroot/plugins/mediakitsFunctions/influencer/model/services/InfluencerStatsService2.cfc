@@ -7,7 +7,7 @@ Licensed under the Apache License, Version v2.0
 http://www.apache.org/licenses/LICENSE-2.0
 
 */
-component displayname="InfluencerStatsService" persistent="false" accessors="true" output="false" extends="baseInfluencerService" {
+component displayname="InfluencerStatsService" persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" {
 	
 	public void function init() {
 		SUPER.init();

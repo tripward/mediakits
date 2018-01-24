@@ -1,4 +1,4 @@
-<cfcomponent displayname="genericPayPalServices" persistent="false" extends="baseInfluencerService" accessors="true" hint="I provide common controller methods" output="false">
+<cfcomponent displayname="genericPayPalServices" persistent="false" extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService" accessors="true" hint="I provide common controller methods" output="false">
 
 	<cfproperty name="beanfactory" />
 	

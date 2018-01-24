@@ -20,6 +20,11 @@ component persistent="false" accessors="true" output="false" extends="mura.plugi
 		lock scope='application' type='exclusive' timeout=20 {
 			getApplication().setupApplicationWrapper(); // this ensures the appCache is cleared as well
 		};
+		
+		/*m.getServiceFactory().declareBean(beanName='MY_BEAN',dottedPath='plugins.MyPlug.model.beans.MY_BEAN', isSingleton=false);*/
+		m.getServiceFactory().declareBean(beanName='demograpphicsService',dottedPath='plugins.mediakitsFunctions.model.services.demograpphicsService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='categoryService',dottedPath='plugins.mediakitsFunctions.model.services.categoryService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='InfluencerStatsService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InfluencerStatsService', isSingleton=true);
 
 		// register this file as a Mura eventHandler
 		variables.pluginConfig.addEventHandler(this);

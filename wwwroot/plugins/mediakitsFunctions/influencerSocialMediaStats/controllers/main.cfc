@@ -29,7 +29,7 @@ component displayname="influencerSocialMediaStatsMainCointroller"persistent="fal
 		/*target = CreateObject('component',"plugins.mediakitsFunctions.influencer.model.services.InfluencerStatsService");*/
 		/*WriteDump(var=target,top=2,label='goo', abort=false);*/
 		/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
-		rc.socialMediaStats = variables.InfluencerStatsService.getAllStats(influencerInfo=rc);
+		rc.socialMediaStats = variables.InfluencerStatsService.getAllStats(rc.influencerAccount.getProfile().getinfluencerProfileid());
 
 		/*rc.socialMediaStats = {};
 		rc.socialMediaStats.twitterFollowersCount = 5;
