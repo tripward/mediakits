@@ -46,10 +46,10 @@
   	)#
   </cfif>
 
-  <script>
-    Mura(function(m) { 
-      m.loader() 
-        .loadcss('#rc.m.globalConfig('context')#/plugins/mediakitsFunctions/assets/css/mediakitsFunctions.css') ;
+  <!---<script>
+    Mura(function(m) {
+      m.loader()
+        .loadcss('#rc.m.globalConfig('context')#/plugins/mediakitsFunctions/assets/css/mediakitsFunctions.css');
     });
-  </script>
+  </script>--->
 </cfoutput>

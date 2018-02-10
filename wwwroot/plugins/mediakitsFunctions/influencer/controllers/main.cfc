@@ -198,15 +198,26 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			rc.currentInfluencerDemographics = valueList(rc.InfluencerdemoQuery.demographicID);
 			rc.InfluencerCatQuery = rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getQuery();
 			rc.currentInfluencerCategories = valueList(rc.InfluencerCatQuery.categoryid);
-	
+			WriteDump(var=rc,top=2,label='goo', abort=true);
+			rc.facebookresponse = variables.getCategoryServices().getOptionList();
+
 		} else {
 			location("/log-in/", false, '302');abort;
 		}
 		
 	}
 	
+	public void function getAppAccessToken(required struct rc) {
+			getAppAccessToken(arguments.rc);
+		var appAccessTokenApiPath = 'https://graph.facebook.com/oauth/access_token?client_id={app-id}&client_secret={app-secret}&grant_type=client_credentials';
+		
+		
+		WriteDump(var=request,top=2,label='goo', abort=true);
+		
+	}
+	
 	public void function persistProfile(required struct rc) {
-		/*WriteDump(var=rc.TwitterUsername,top=1,label='goo', abort=false);*/
+
 		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
 		
 		rc.profile = rc.influencerAccount.getProfile();

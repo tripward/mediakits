@@ -19,6 +19,12 @@ component displayname="baseInfluencerService"  persistent="false" accessors="tru
 		THIS.setbeanfactory(application.mediakitsfunctions.factory);
 		return this;
 	}
+	
+	public string function dbDateDateTime(required string dateToformat)
+		
+		{
+		return dateTimeFormat(arguments.dateToformat, "YYYY-MM-DD HH:MM:SS");
+		}
 
 	public any function getGUID() {
 		var uuidLibObj = createobject("java", "java.util.UUID");
@@ -58,6 +64,15 @@ component displayname="baseInfluencerService"  persistent="false" accessors="tru
 			arguments.props = collectAllProperties(arguments.md.extends,arguments.props);
 		}
 		return arguments.props;
+	}
+	
+	public any function getFBInfo(required any account='') {
+
+		var facebookResponse = {};
+		
+		var local.hoo = cfhttp(url="https://graph.facebook.com/v2.1/me/friends?AccessToken=EAAcrAkgFkjYBAPa9R0icRxkzbklkAb3oYuN0S2AJhSYAAH7l9t9hITkzpjNNY1kaYkhhQIj5NJPGUTv5f3eEZAj8eOiHJhYrIeS4H09QcAkejJwztDzCLVZB4u1teHSl4NcAQmV3ijgyMiMIzRZBx9ZBA5dPeRoZD" ,result="local.callResponse");
+		WriteDump(var=llocal.hoo,top=2,label='goo', abort=true);
+		return local.callResponse;
 	}
 	
 	
