@@ -10,12 +10,12 @@ http://www.apache.org/licenses/LICENSE-2.0
 --->
 	<cfscript>
 		//request.layout = false;
-		local.registrations = rc.registrations;
+		/*local.registrations = rc.registrations;*/
 	</cfscript>
 </cfsilent>
-<cfoutput>
+<!---<cfoutput>--->
 
-	<h4>Registrations</h4>
+	<!---<h4>Registrations</h4>
 
 	<cfif len(rc.messages)>
 		<div class="alert alert-info">
@@ -78,4 +78,4 @@ http://www.apache.org/licenses/LICENSE-2.0
 			<cfdump var="#rc.configuredBy#" label="configuredBy" />
 		</div>
 	</cfif>
-</cfoutput>
+</cfoutput>--->

@@ -12,29 +12,41 @@ component
 	// influencerProfile attributes		
 		property name="keywords" datatype="varchar" length="255" default="";
 		property name="description" datatype="varchar" length="1000" default="";
-
-		property name="twitterUserName" datatype="varchar" required="true" length="50" default="";
+		property name="twitterUserName" datatype="varchar" length="50" default="";
 		property name="twitterPassword" datatype="varchar" length="50" default="";
 		property name="twitterFollowersCount" type="integer" datatype="integer" length="10" default="0";
-		property name="twitterLastUpdate" datatype="date";
+		property name="twitterLastUpdate" datatype="dateTime";
 		property name="pintrestUserName" datatype="varchar" length="50" default="";
 		property name="pintrestPassword" datatype="varchar" length="50" default="";
 		property name="pintrestFollowersCount" type="integer" datatype="integer" length="10" default="0";
-		property name="pintrestLastUpdate" datatype="date";
+		property name="pintrestLastUpdate" datatype="dateTime";
 		property name="instagramUserName" datatype="varchar" length="50" default="";
 		property name="instagramPassword" datatype="varchar" length="50" default="";
+		property name="instagramAccessCode" datatype="varchar" length="1000" default="";
+		property name="instagramAccessCodeSetUpdate" datatype="dateTime" ;
 		property name="instagramFollowersCount" type="integer" datatype="integer" length="10" default="0";
-		property name="instagramLastUpdate" datatype="date" ;
+		property name="instagramLastUpdate" datatype="dateTime" ;
+		
+		property name="FacebookID" datatype="varchar" length="50" default="";
 		property name="FacebookUsername" datatype="varchar" length="50" default="";
 		property name="facebookPassword" datatype="varchar" length="50" default="";
+		property name="facebookShortLivedAccessToken" datatype="varchar" length="1000" default="";
+		property name="facebookShortLivedAccessTokenSetDate" datatype="DATETIME" ;
+		property name="facebookLongLivedAccessToken" datatype="varchar" length="1000" default="";
+		property name="facebookLongLivedAccessTokenType" datatype="varchar" length="1000" default="";
+		property name="facebookLongLivedAccessTokenExpiresIn" datatype="varchar" length="50" default="";
+		property name="facebookLongLivedAccessTokenSetDate" datatype="dateTime" ;
 		property name="facebookFriendsCount" type="integer" datatype="integer" length="10" default="0";
+		property name="facebookBusinesspageLink" datatype="varchar" length="255" default="";
+		property name="facebookStatsLastUpdate" datatype="dateTime" ;
+		
+		
 		property name="mediakitTemplateID" type="integer" datatype="integer" length="10" default="1";
 		
-		property name="facebookBusinesspageLink" datatype="varchar" length="255" default="";
-		property name="facebookLastUpdate" datatype="date" ;
+		
 		property name="googleAnalyticsUsername" datatype="varchar" length="50" default="";
 		property name="googleAnalyticsPassword" datatype="varchar" length="50" default="";
-		property name="googleLastUpdate" datatype="date" ;
+		property name="googleLastUpdate" datatype="dateTime" ;
 		
 		property name="blogURL" datatype="varchar" length="100" default="";
 		property name="webURL" datatype="varchar" length="100" default="";

@@ -1,0 +1,28 @@
+facebook
+APP ID: 2017613635228214
+app secret: dd9ce81152598daed05ea7bbc1209a1e
+
+
+create fb app
+under products in app dash, settings> turn on enable oathweb etc, strict no and add you local path to valid oath doains
+https://forum.bubble.is/t/solved-fb-login-domain-problem/3267/13
+
+
+
+
+
+
+
+
+
+
+
+
+Instigram
+app id:
+App access token
+https://www.instagram.com/developer/authentication/
+
+
+google
+http://www.progratory.com/index.cfm/2014/10/31/Getting-started-with-oauth2-for-Google

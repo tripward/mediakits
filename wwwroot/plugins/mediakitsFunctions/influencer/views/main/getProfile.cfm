@@ -12,6 +12,7 @@
 <!---<cfdump var="#rc#" label="cgi" abort="false" top="3" />--->
 this is the profile in getprofile
 <div class=""><a href="/infuencer-profile/generate-media-kit/#buildURL('generateMediaKit:main.default&influenceraccountid=#session.influencerAccount.getID()#')#">Generate MediaKit</a></div>
+<div class=""><a href="/infuencer-profile/edit-facebook-connection?influenceraccountid=#session.influencerAccount.getID()#">Set up Facebook Connection</a></div>
 <!---#session.influenceraccount.getID()# -- 
 #session.influenceraccount.getProfile().getID()#
 ----------------------------------
@@ -20,6 +21,9 @@ this is the profile in getprofile
 
 <!---<cfdump var="#session.influenceraccount#" label="cgi" abort="false" top="3" />
 <cfdump var="#rc.influenceraccount#" label="cgi" abort="true" top="3" />--->
+
+<div onclick="getProfileCall();">retrieve stuff</div>
+<div id="status"></div>
 
 <div class="row">
 	<div class="col-md-6">
@@ -74,6 +78,22 @@ this is the profile in getprofile
 			<input id="general_lastname" class="form-control" type="text" size="20" name="lastname" value="#rc.influencerAccount.getLastName()#" />
 			<a href="foo" id='general_EditLink'>Edit</a>
 		</div>
+
+		<h4>facebook Info</h4>
+		<cfif len(trim(rc.influencerAccount.getProfile().getfacebookUserName()))>
+			<div id="facebook" class="form-group">
+				<label for="facebookUserName">Username</label>
+				<input id="facebookUserName" class="form-control" type="text" size="20" name="facebookUserName" value="#rc.influencerAccount.getProfile().getfacebookUserName()#" />
+				<!---<label for="facebookPassword">Password</label>
+				<input id="facebookPassword" class="form-control" type="password" size="20" name="facebookPassword" value="#application.su.decryptThis(rc.influencerAccount.getProfile().getfacebookPassword())#" />--->
+				<!---<a href="foo" id='facebook'>edit</a>--->
+				<label for="facebookBusinesspageLink">Business Link</label>
+				<input id="facebookBusinesspageLink" class="form-control" type="text" size="80" name="facebookBusinesspageLink" value="#rc.influencerAccount.getProfile().getfacebookBusinesspageLink()#" />
+				<a href="foo" id='facebook_EditLink'>Edit</a>
+			</div>
+		<cfelse>
+			<div class=""><a href="/infuencer-profile/edit-facebook-connection?influenceraccountid='#session.influencerAccount.getID()#'">Set up Facebook Connection</a></div>
+		</cfif>
 		
 		<h4>Twitter Info</h4>
 		<div id="twitter" class="form-group">
@@ -111,17 +131,8 @@ this is the profile in getprofile
 			<a href="foo" id='linkedIn_EditLink'>Edit</a>
 		</div>
 		
-		<h4>facebook Info</h4>
-		<div id="facebook" class="form-group">
-			<label for="facebookUserName">Username</label>
-			<input id="facebookUserName" class="form-control" type="text" size="20" name="facebookUserName" value="#rc.influencerAccount.getProfile().getfacebookUserName()#" />
-			<label for="facebookPassword">Password</label>
-			<input id="facebookPassword" class="form-control" type="password" size="20" name="facebookPassword" value="#application.su.decryptThis(rc.influencerAccount.getProfile().getfacebookPassword())#" />
-			<a href="foo" id='facebook'>edit</a>
-			<label for="facebookBusinesspageLink">Business Link</label>
-			<input id="facebookBusinesspageLink" class="form-control" type="text" size="80" name="facebookBusinesspageLink" value="#rc.influencerAccount.getProfile().getfacebookBusinesspageLink()#" />
-			<a href="foo" id='facebook_EditLink'>Edit</a>
-		</div>
+		
+		
 		
 		<h4>googleAnalytics Info</h4>
 		<div id="googleAnalytics" class="form-group">

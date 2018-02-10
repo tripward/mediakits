@@ -7,20 +7,47 @@ Licensed under the Apache License, Version v2.0
 http://www.apache.org/licenses/LICENSE-2.0
 
 *//* extends="plugins.mediakitsFunctions.influencer.model.services.baseInfluencerService"*/
-component displayname="InfluencerStatsService" persistent="false" accessors="true" output="false" {
+component displayname="InfluencerStatsService" persistent="false" extends="plugins.mediakitsFunctions.common.model.services.baseService" accessors="true" output="false" {
 	
-	/*public void function init() {
+	property name="beanFactory"; // use if you need access to the beanFactory
+	property name='facebookService';
+	property name='InstagramService';
+	property name='pintrestService';
+	property name='twitterService';
+	
+	
+	public void function init() {
 		SUPER.init();
-	}*/
+		
+		
+		/*variables.twitterService = application.serviceFactory.getBean('twitterService');*/
+		
+		/*writeDump( application.serviceFactory.getBeanInfo() );        
+             abort;*/
+	}
 	
-	public struct function getAllStats(required any influencerProfileID) {
-		
+	public struct function getAllStats(required any influencerProfile) {
+		/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
+
 		local.socialMediaStats = {};
-		local.socialMediaStats.twitterFollowersCount = 5;
-		local.socialMediaStats.pintrestFollowersCount = 7;
-		local.socialMediaStats.instagramFollowersCount = 9;
-		local.socialMediaStats.facebookFriendsCount = 9;
 		
+		if (len(trim(arguments.influencerProfile.getTwitterUserName()))){
+			local.socialMediaStats.twitter.stats = variables.twitterService.getStats(arguments.influencerProfile);
+		}
+		
+		if (len(trim(arguments.influencerProfile.getpintrestUserName()))){
+			local.socialMediaStats.pintrest.stats = variables.pintrestService.getStats(arguments.influencerProfile);
+		}
+		
+		if (len(trim(arguments.influencerProfile.getinstagramUserName()))){
+			local.socialMediaStats.instagram.stats = variables.InstagramService.getStats(arguments.influencerProfile);
+		}
+		
+		if (len(trim(arguments.influencerProfile.getFacebookUsername()))){
+			local.socialMediaStats.facebook.stats = variables.facebookService.getStats(arguments.influencerProfile);
+		}
+		
+		/*WriteDump(var=local.socialMediaStats,top=2,label='goo', abort=true);*/
 		return local.socialMediaStats;
 	}
 

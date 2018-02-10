@@ -11,6 +11,8 @@
 	<cfif YesNoFormat($.content('searchExclude'))><meta name="robots" content="noindex"></cfif>
 	<meta name="generator" content="Mura CMS #$.globalConfig('version')#">
 
+	<script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
+	
 	<title>#esapiEncode('html', $.content('HTMLTitle'))# - #esapiEncode('html', $.siteConfig('site'))#</title>
 	<!--- Mura CMS Base Styles--->
 	<link rel="stylesheet" href="#$.siteConfig('assetPath')#/css/mura.7.0.min.css?v=#$.siteConfig('version')#">
@@ -21,7 +23,7 @@
 	<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/assets/bootstrap/css/bootstrap.min.css">
 
 	<!--- Fonts --->
-	<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/assets/font-awesome/css/font-awesome.css">
+	<!---<link rel="stylesheet" href="#$.siteConfig('themeAssetPath')#/assets/font-awesome/css/font-awesome.css">--->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 	<!--- MediaKits Stylesheet --->
