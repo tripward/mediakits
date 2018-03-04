@@ -9,32 +9,34 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 		SUPER.init();
 		return this;
 	}
-	/*required string twitterUserName=''*/
+	
 	public any function getStats(required any account='') {
-/*WriteDump(var=arguments.account.getProfile().gettwitterUserName(),top=2,label='goo', abort=true);*/
-		var twitterStats = {};
-		twitterstats.fullcallResponse = THIS.getGeneralInfoFeed(arguments.account);
-		twitterstats.followers = THIS.getFollowerCountAsStruct(twitterstats.fullcallResponse);
-		
 
-		return twitterstats;
+		var facebookStats = {};
+		
+		facebookStats.total_count = variables.getFBInfo(arguments.account);
+
+		return facebookStats;
 	}
 	
-	public any function getFollowerCountAsStruct(required any callResponse='') {
+	public any function getFBInfo(required any account='') {
 
-		var local.followersCFStruct = deserializeJSON(arguments.callResponse.filecontent);
-
-		return local.followersCFStruct[1] ;
-	}
-	
-	public any function getGeneralInfoFeed(required any account='') {
-
-		var twitterStats = {};
-		twitterstats.followers = 5;
-		
-		cfhttp(url="https://cdn.syndication.twimg.com/widgets/followbutton/info.json?screen_names=#arguments.account.getProfile().gettwitterUserName()#" ,result="local.callResponse");
+		var facebookResponse = {};
+		var theToken = arguments.account.getProfile().getfacebookLongLivedAccessToken();
+		/*WriteDump(var=theToken,top=2,label='goo', abort=true);*/
+		cfhttp(url="https://graph.facebook.com/v2.1/#arguments.account.getProfile().getFacebookID()#/friends?access_token=#theToken#&client_id=2017613635228214&client_secret=dd9ce81152598daed05ea7bbc1209a1e" ,result="local.callResponse");
 		/*WriteDump(var=local.callResponse,top=2,label='goo', abort=true);*/
-		return local.callResponse;
+		
+		if (local.callResponse.statusCode IS "200 OK") {
+			facebookResponse = deserializeJSON(local.callResponse.fileContent);
+			/*WriteDump(var=facebookResponse,top=2,label='goo', abort=true);*/
+		}        
+		else {        
+			facebookResponse.summary.total_count = "FB Summary Call Failed";
+		}
+		
+		
+		return facebookResponse.summary.total_count;
 	}
 	
 	

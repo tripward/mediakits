@@ -11,7 +11,7 @@
 	<cfif YesNoFormat($.content('searchExclude'))><meta name="robots" content="noindex"></cfif>
 	<meta name="generator" content="Mura CMS #$.globalConfig('version')#">
 
-	<script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
+	<script type="text/javascript" src="//connect.facebook.net/en_US/all.js"></script>
 	
 	<title>#esapiEncode('html', $.content('HTMLTitle'))# - #esapiEncode('html', $.siteConfig('site'))#</title>
 	<!--- Mura CMS Base Styles--->
@@ -52,5 +52,10 @@
 	<cfset rs=$.getBean('feedManager').getFeeds($.event('siteID'),'Local',true,true) />
 	<cfset apiEndpoint=$.siteConfig().getApi('feed','v1').getEndpoint() />
 	<cfloop query="rs"><link rel="alternate" type="application/rss+xml" title="#esapiEncode('html_attr', $.siteConfig('site'))# - #esapiEncode('html_attr', rs.name)#" href="#XMLFormat('#apiEndpoint#/?feedID=#rs.feedID#')#"></cfloop>
+	<!---<cfdump var="#session.influenceraccount#" label="cgi" abort="true" top="3" />--->
+	
+	<cfif structKeyExists(session,"influenceraccount")>
+		<a href="/infuencer-profile/?mediakitsFunctionsaction=influencer:main.getProfile&influenceraccountid=#session.influenceraccount.getinfluenceraccountid()#">Profile</a>
+	</cfif>
 </head>
 </cfoutput>

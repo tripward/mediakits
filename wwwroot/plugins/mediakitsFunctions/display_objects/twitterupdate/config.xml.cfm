@@ -1,4 +1,4 @@
 <cfscript>
 
 </cfscript>
-<mura name="Profile Twitter Stats" contenttypes="*" iconclass="mi-leaf"></mura>
+<mura name="Twitter Connection Settings" contenttypes="*" iconclass="mi-leaf"></mura>

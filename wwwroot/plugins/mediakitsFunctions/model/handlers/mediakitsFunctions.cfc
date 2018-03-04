@@ -36,23 +36,21 @@ component persistent="false" accessors="true" output="false" extends="mura.plugi
 
 	}
 	/*required struct m*/
-	public void function onSiteRequestStart() {
+	public void function onSiteRequestStart(required struct m) {
 		// trigger FW/1 to reload
-		/*WriteDump(var=arguments.m,top=2,label='goo', abort=true);*/
-		/*<cfargument name="$" />
-		<cfset $ = arguments.$ />*/
+		/*WriteDump(var=arguments.m,top=2,label='foo', abort=true);*/
+		
 		
 		request.fbAppKey = '';
-		
-		/*m.getServiceFactory().declareBean(beanName='MY_BEAN',dottedPath='plugins.MyPlug.model.beans.MY_BEAN', isSingleton=false);*/
-		arguments.m.getServiceFactory().declareBean(beanName='demograpphicsService',dottedPath='plugins.mediakitsFunctions.model.services.demograpphicsService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='categoryService',dottedPath='plugins.mediakitsFunctions.model.services.categoryService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='InfluencerStatsService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InfluencerStatsService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='facebookService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.facebookService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='InstagramService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InstagramService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='pintrestService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.pintrestService', isSingleton=true);
-		arguments.m.getServiceFactory().declareBean(beanName='twitterService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.twitterService', isSingleton=true);
-
+		/*variables.onApplicationLoad(arguments.m);*/
+		m.getServiceFactory().declareBean(beanName='demograpphicsService',dottedPath='plugins.mediakitsFunctions.model.services.demograpphicsService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='categoryService',dottedPath='plugins.mediakitsFunctions.model.services.categoryService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='InfluencerStatsService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InfluencerStatsService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='facebookService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.facebookService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='InstagramService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InstagramService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='pintrestService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.pintrestService', isSingleton=true);
+		m.getServiceFactory().declareBean(beanName='twitterService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.twitterService', isSingleton=true);
+/*WriteDump(var=arguments,top=2,label='goo', abort=true);*/
 	}
 
 	// ========================== Helper Methods ==============================

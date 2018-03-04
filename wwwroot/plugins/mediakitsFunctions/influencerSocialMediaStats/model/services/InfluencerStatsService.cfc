@@ -26,27 +26,32 @@ component displayname="InfluencerStatsService" persistent="false" extends="plugi
              abort;*/
 	}
 	
-	public struct function getAllStats(required any influencerProfile) {
+	public struct function getAllStats(required any account) {
 		/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
 
 		local.socialMediaStats = {};
 		
-		if (len(trim(arguments.influencerProfile.getTwitterUserName()))){
-			local.socialMediaStats.twitter.stats = variables.twitterService.getStats(arguments.influencerProfile);
+		if (len(trim(arguments.account.getProfile().getTwitterUserName()))){
+			local.socialMediaStats.twitter.stats = variables.twitterService.getStats(arguments.account);
 		}
 		
-		if (len(trim(arguments.influencerProfile.getpintrestUserName()))){
+		
+		
+		if (len(trim(arguments.account.getProfile().getinstagramUserName()))){
+			local.socialMediaStats.instagram.stats = variables.InstagramService.getStats(arguments.account);
+		}
+		
+		if (len(trim(arguments.account.getProfile().getFacebookUsername()))){
+			local.socialMediaStats.facebook.stats = variables.facebookService.getStats(arguments.account);
+			
+		}
+		
+		/*if (len(trim(arguments.influencerProfile.getpintrestUserName()))){
 			local.socialMediaStats.pintrest.stats = variables.pintrestService.getStats(arguments.influencerProfile);
-		}
+		}*/
 		
-		if (len(trim(arguments.influencerProfile.getinstagramUserName()))){
-			local.socialMediaStats.instagram.stats = variables.InstagramService.getStats(arguments.influencerProfile);
-		}
 		
-		if (len(trim(arguments.influencerProfile.getFacebookUsername()))){
-			local.socialMediaStats.facebook.stats = variables.facebookService.getStats(arguments.influencerProfile);
-		}
-		
+		/*WriteDump(var=local.socialMediaStats,top=5,label='googggg', abort=true);*/
 		/*WriteDump(var=local.socialMediaStats,top=2,label='goo', abort=true);*/
 		return local.socialMediaStats;
 	}

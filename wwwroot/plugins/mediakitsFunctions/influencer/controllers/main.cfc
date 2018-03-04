@@ -9,10 +9,11 @@ http://www.apache.org/licenses/LICENSE-2.0
 */
 component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.common.controllers.basecontroller" displayname="InfluencerMainController" {
 
-	
+	property InfluencerStatsService;
 
 	public void function before(required struct rc) {
 		SUPER.before(rc);
+		variables.InfluencerStatsService = variables.getServiceFactory().getBean('InfluencerStatsService');
 	}
 
 	public void function getSubScribeForm(required struct rc) {
@@ -121,6 +122,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			lock name="lockName" timeout="3" {
 				session.influencerAccount = variables.InfluencerAccountService.getByLoginCreds(username=rc.username,password=rc.securedPassword);
+				
 				session.influencerAccountID = session.influencerAccount.getID(); 
 			
 				if (session.influencerAccount.getIsNew()) {
@@ -136,6 +138,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 					variables.fw.redirect(action='influencer:main.getLoginForm', preserve='ALL');/*,preserve='ALL'*/
 					abort;
 				} else {
+					/*WriteDump(var=request,top=2,label='goo', abort=true);*/
 					variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
 					abort;
 				}
@@ -157,6 +160,46 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 
 			}
 
+	}
+	
+	
+	
+	public void function getProfile(required struct rc) {
+		
+		if (structKeyExists(session,'influencerAccount')) {
+			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
+
+			rc.demographics = variables.getDemographicsServices().getOptionList();
+
+			rc.categories = variables.getCategoryServices().getOptionList();
+			
+			rc.InfluencerdemoQuery = rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery();
+
+			rc.currentInfluencerDemographics = valueList(rc.InfluencerdemoQuery.demographicID);
+			rc.InfluencerCatQuery = rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getQuery();
+			rc.currentInfluencerCategories = valueList(rc.InfluencerCatQuery.categoryid);
+			
+			rc.socialStats = variables.InfluencerStatsService.getAllStats(rc.influencerAccount);
+			/*WriteDump(var=rc.socialStats.twitter.stats.asStruct.followers_count,top=7,label='hhhh', abort=false);
+			WriteDump(var=rc.socialStats.instagram.stats.user.followed_by.count,top=7,label='hhhh', abort=false);*/
+			
+			/*rc.influencerAccount.getProfile().settwitterFollowedByCount(rc.socialStats.twitter.stats.asStruct.followers_count);
+			rc.influencerAccount.getProfile().setinstagramFollowersCount(rc.socialStats.instagram.stats.user.followed_by.count);
+			WriteDump(var=rc.influencerAccount.getProfile(),top=7,label='hhhh', abort=true);*/
+			
+		} else {
+			location("/influencer-login-form/", false, '302');abort;
+		}
+		
+	}
+	
+	public void function getAppAccessToken(required struct rc) {
+			getAppAccessToken(arguments.rc);
+		var appAccessTokenApiPath = 'https://graph.facebook.com/oauth/access_token?client_id={app-id}&client_secret={app-secret}&grant_type=client_credentials';
+		
+		
+		WriteDump(var=request,top=2,label='goo', abort=true);
+		
 	}
 	
 	public void function getprofileTwitterStats(required struct rc) {
@@ -183,37 +226,6 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 
 			}
 
-	}
-	
-	public void function getProfile(required struct rc) {
-		if (structKeyExists(session,'influencerAccount')) {
-			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=session.InfluencerAccount.getID());
-
-			rc.demographics = variables.getDemographicsServices().getOptionList();
-			/*WriteDump(var=variables,top=2,label='goo', abort=true);*/
-			rc.categories = variables.getCategoryServices().getOptionList();
-			
-			rc.InfluencerdemoQuery = rc.influencerAccount.getProfile().getInfluencerProfileToDemographics().getQuery();
-			/*WriteDump(var=rc.InfluencerdemoQuery,top=2,label='goo', abort=true);*/
-			rc.currentInfluencerDemographics = valueList(rc.InfluencerdemoQuery.demographicID);
-			rc.InfluencerCatQuery = rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getQuery();
-			rc.currentInfluencerCategories = valueList(rc.InfluencerCatQuery.categoryid);
-			WriteDump(var=rc,top=2,label='goo', abort=true);
-			rc.facebookresponse = variables.getCategoryServices().getOptionList();
-
-		} else {
-			location("/log-in/", false, '302');abort;
-		}
-		
-	}
-	
-	public void function getAppAccessToken(required struct rc) {
-			getAppAccessToken(arguments.rc);
-		var appAccessTokenApiPath = 'https://graph.facebook.com/oauth/access_token?client_id={app-id}&client_secret={app-secret}&grant_type=client_credentials';
-		
-		
-		WriteDump(var=request,top=2,label='goo', abort=true);
-		
 	}
 	
 	public void function persistProfile(required struct rc) {

@@ -13,7 +13,7 @@
                         <h1>Media_Kits</h1>
                         <div class="align-right">
                             <a class="highlight-bg button" id="sign-up-btn" href="##">Sign up</a>
-                            <a id="log-in-btn" href="##">Log in</a>
+                            <a id="log-in-btn" href="/influencer-login-form/">Log in</a>
                         </div>
                     </div>
                     

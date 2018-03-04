@@ -94,9 +94,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			QueryExecute("UPDATE custom_influencerprofiles SET facebookLongLivedAccessTokenExpiresIn = ( :facebookLongLivedAccessTokenExpiresIn ), facebookLongLivedAccessToken = ( :facebookLongLivedAccessToken ), facebookLongLivedAccessTokenType = ( :facebookLongLivedAccessTokenType ), facebookLongLivedAccessTokenSetDate=#now()# WHERE ( influenceraccountid = :influenceraccountid )",
 			 {facebookLongLivedAccessTokenExpiresIn={value='#arguments.facebookLongLivedAccessTokenExpiresIn#', CFSQLType='cf_sql_char'}, facebookLongLivedAccessToken={value='#arguments.facebookLongLivedAccessToken#', CFSQLType='cf_sql_char'},facebookLongLivedAccessTokenType={value='#arguments.facebookLongLivedAccessTokenType#', CFSQLType='cf_sql_char'}, influenceraccountid={value='#arguments.influenceraccountid#', CFSQLType='cf_sql_char'}});
 			
-			
-			
-			
+
 			
 			/*var qryStr = "
 			UPDATE custom_influencerprofiles 
@@ -135,14 +133,24 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 	public any function getFBInfo(required any account='') {
 
 		var facebookResponse = {};
-		
-		var local.hoo = cfhttp(url="https://graph.facebook.com/v2.1/me/friends?AccessToken=EAAcrAkgFkjYBAPa9R0icRxkzbklkAb3oYuN0S2AJhSYAAH7l9t9hITkzpjNNY1kaYkhhQIj5NJPGUTv5f3eEZAj8eOiHJhYrIeS4H09QcAkejJwztDzCLVZB4u1teHSl4NcAQmV3ijgyMiMIzRZBx9ZBA5dPeRoZD" ,result="local.callResponse");
-		WriteDump(var=llocal.hoo,top=2,label='goo', abort=true);
+		var theToken = arguments.account.getProfile().getfacebookLongLivedAccessToken();
+		/*WriteDump(var=theToken,top=2,label='goo', abort=true);*/
+		cfhttp(url="https://graph.facebook.com/v2.1/#arguments.account.getProfile().getFacebookID()#/friends?access_token=#theToken#&client_id=2017613635228214&client_secret=dd9ce81152598daed05ea7bbc1209a1e" ,result="local.callResponse");
+		WriteDump(var=local.callResponse,top=2,label='goo', abort=true);
 		return local.callResponse;
 	}
 	
 	
 }
+
+			/*<cfhttp url="https://graph.facebook.com/v2.3/oauth/access_token?grant_type=fb_exchange_token&client_id=2017613635228214&client_secret=dd9ce81152598daed05ea7bbc1209a1e&fb_exchange_token=#rc.facebookShortLivedAccessToken#&redirect_uri=http://mediakits.loc/infuencer-profile/edit-facebook-connection/?influenceraccountid=rc.influenceraccountid&wedidit=true" method="get" result="local.result">*/
+			/*var foo = variables.InfluencerProfileService.getFBInfo(rc.influencerAccount);
+			WriteDump(var=variables,top=2,label='goo', abort=true);*/
+			/*WriteDump(var=rc.influencerAccount.getProfile(),top=2,label='goo', abort=true);*/
+			/*var theToken = rc.influencerAccount.getProfile().getfacebookShortLivedAccessToken();*/
+			/*var theToken = 'EAAcrAkgFkjYBAAyFV7IWS6G02ZBoFqP3UlwoQ32GlHCuYqX23LNUpP9NM0zZCuwKp9CrZCOxQQRl8OUwJMDhiw8bHhk2gfTdkDq5HNN6eGeZCRaKlbeSJzgfjgSI3ZCDOzACiaOyTXT6ZAZCbStiAgedqVoXfWAaFbwgpxoEHF9W6ZC1VI6jy9kDbiy2w1C2ajTGq4DGYcUD9QZDZD';*/
+			/*cfhttp(url="https://graph.facebook.com/v2.1/#rc.influencerAccount.getProfile().getFacebookID()#/friends?Access_Token=#theToken#&client_id=2017613635228214" , method="get", result="local.callResponse");
+			WriteDump(var=local.callResponse,top=2,label='goo', abort=true);*/
 
 /* QueryExecute("UPDATE INTO custom_influencerprofiles
 			(

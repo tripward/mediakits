@@ -24,6 +24,7 @@
 		return result;
 	}
 	
+
 	public any function save(required any saveObj) {
 		
 		local.mySavedBean = arguments.saveObj.save();
