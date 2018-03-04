@@ -8,17 +8,7 @@
 <!---<cfdump var="#rc#" label="cgi" abort="false" top="3" />--->
 this is the profile in getprofile
 <div class=""><a href="/infuencer-profile/generate-media-kit/#buildURL('generateMediaKit:main.default&influenceraccountid=#session.influencerAccount.getID()#')#">Generate MediaKit</a></div>
-<div class=""><a href="/infuencer-profile/edit-facebook-connection?influenceraccountid=#session.influencerAccount.getID()#">Set up Facebook Connection</a></div>
-<!---#session.influenceraccount.getID()# -- 
-#session.influenceraccount.getProfile().getID()#
-----------------------------------
-#rc.influenceraccount.getID()# -- 
-#rc.influenceraccount.getProfile().getID()#--->
 
-<!---<cfdump var="#session.influenceraccount#" label="cgi" abort="false" top="3" />
-<cfdump var="#rc.influenceraccount#" label="cgi" abort="true" top="3" />--->
-
-<!---<div onclick="getProfileCall();">retrieve stuff</div>--->
 <div id="status"></div>
 
 <div class="row">

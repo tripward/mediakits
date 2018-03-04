@@ -25,8 +25,8 @@
 		<input id="pintrestUserName" class="form-control" type="text" size="20" name="pintrestUserName" value="#rc.influencerAccount.getProfile().getpintrestUserName()#" />
 		
 		<h4>Step 2</h4>
-		<p onclick="pintrest()">Click me</p>
-
+		<p onclick="pintresttest()">Click me</p>
+		
 		<h4>Step 3</h4>
 		<button  class="btn btn-default" value="do login" type="submit" >Submit</button>
 		
