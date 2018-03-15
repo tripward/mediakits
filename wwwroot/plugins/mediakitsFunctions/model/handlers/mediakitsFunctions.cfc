@@ -22,6 +22,7 @@ component persistent="false" accessors="true" output="false" extends="mura.plugi
 		};
 		
 		/*m.getServiceFactory().declareBean(beanName='MY_BEAN',dottedPath='plugins.MyPlug.model.beans.MY_BEAN', isSingleton=false);*/
+		m.getServiceFactory().declareBean(beanName='InfluencerAwardsService',dottedPath='plugins.mediakitsFunctions.influencer.model.services.InfluencerAwardsService', isSingleton=true);
 		m.getServiceFactory().declareBean(beanName='demograpphicsService',dottedPath='plugins.mediakitsFunctions.model.services.demograpphicsService', isSingleton=true);
 		m.getServiceFactory().declareBean(beanName='categoryService',dottedPath='plugins.mediakitsFunctions.model.services.categoryService', isSingleton=true);
 		m.getServiceFactory().declareBean(beanName='InfluencerStatsService',dottedPath='plugins.mediakitsFunctions.influencerSocialMediaStats.model.services.InfluencerStatsService', isSingleton=true);

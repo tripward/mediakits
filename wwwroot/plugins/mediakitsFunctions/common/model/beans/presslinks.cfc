@@ -37,14 +37,22 @@ component
 		var obj = super.validate();
 		var errors = obj.getErrors();
 
-		// Hidden Form Fields
-			obj.set('datemodified', Now());
+		if ( !Len(obj.get('name')) ) {
+			structInsert(errors,'name','presslink Name is required');
+		}
 
-			if ( !Len(obj.get('datecreated')) ) {
-				obj.set('datecreated', Now());
-			}
+		return errors;
+	}
+	
+	public any function getProfileDisplay() {
 
-		return this;
+		savecontent variable="myContent" {
+		 writeOutput("<div>#variables.name# <cfif structKeyExists(variables,'')#variables.PresentedDate#</div><div>#variables.PresentedBy#</div><div>#variables.description#</div>");
+		}
+		
+		
+		/*WriteDump(var=THIS,top=2,label='goo', abort=true);*/
+		return myContent;
 	}
 
 	// Custom Methods
@@ -57,6 +65,14 @@ component
 			
 			
 			
+			if (structKeyExists(arguments.submittedForm, 'publication')) {
+				this.setpublication(arguments.submittedForm.publication);
+			}
+			
+			if (structKeyExists(arguments.submittedForm, 'DisplayDate')) {
+				this.setDisplayDate(arguments.submittedForm.DisplayDate);
+			}
+			
 			if (structKeyExists(arguments.submittedForm, 'keywords')) {
 				this.setkeywords(arguments.submittedForm.keywords);
 			}
@@ -66,13 +82,21 @@ component
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'name')) {
-				this.settwitterUserName(arguments.submittedForm.name);
+				this.setName(arguments.submittedForm.name);
+			}
+			
+			if (structKeyExists(variables, 'presslinkid') AND len(trim(variables.presslinkid))) {
+				this.setdatemodified(now());
+			} else {
+				this.setdatecreated(now());
 			}
 			
 			
 			/*WriteDump(var=THIS,top=2,label='goo', abort=true);*/
 			return THIS;
 		}
+		
+		
 
 		// @end Custom Methods
 }

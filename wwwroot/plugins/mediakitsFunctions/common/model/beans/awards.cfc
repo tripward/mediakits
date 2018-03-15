@@ -29,7 +29,7 @@ component
 	property 
 		name="InfluencerProfile"
 		fieldtype="many-to-one"
-		relatesto="InfluencerProfile";
+		relatesto="InfluencerProfile" fkcolumn="influencerProfileid" ;
 		
 		
 	// Custom Validations
@@ -37,15 +37,25 @@ component
 		var obj = super.validate();
 		var errors = obj.getErrors();
 
-		// Hidden Form Fields
-			obj.set('datemodified', Now());
+		if ( !Len(obj.get('name')) ) {
+			structInsert(errors,'username','Award Name is required');
+		}
 
-			if ( !Len(obj.get('datecreated')) ) {
-				obj.set('datecreated', Now());
-			}
-
-		return this;
+		return errors;
 	}
+	
+	public any function getProfileDisplay() {
+			
+			
+			
+			savecontent variable="myContent" {
+			 writeOutput("<div>#variables.name# <cfif structKeyExists(variables,'')#variables.PresentedDate#</div><div>#variables.PresentedBy#</div><div>#variables.description#</div>");
+			}
+			
+			
+			/*WriteDump(var=THIS,top=2,label='goo', abort=true);*/
+			return myContent;
+		}
 
 	// Custom Methods
 		
@@ -57,8 +67,12 @@ component
 			
 			
 			
-			if (structKeyExists(arguments.submittedForm, 'keywords')) {
-				this.setkeywords(arguments.submittedForm.keywords);
+			if (structKeyExists(arguments.submittedForm, 'PresentedBy')) {
+				this.setPresentedBy(arguments.submittedForm.PresentedBy);
+			}
+			
+			if (structKeyExists(arguments.submittedForm, 'PresentedDate')) {
+				this.setPresentedDate(arguments.submittedForm.PresentedDate);
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'description')) {
@@ -66,13 +80,20 @@ component
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'name')) {
-				this.settwitterUserName(arguments.submittedForm.name);
+				this.setName(arguments.submittedForm.name);
+			}
+			
+			if (structKeyExists(variables, 'awardid') AND len(trim(variables.awardid))) {
+				this.setdatemodified(now());
+			} else {
+				this.setdatecreated(now());
 			}
 			
 			
 			/*WriteDump(var=THIS,top=2,label='goo', abort=true);*/
 			return THIS;
 		}
+		
 
 		// @end Custom Methods
 }

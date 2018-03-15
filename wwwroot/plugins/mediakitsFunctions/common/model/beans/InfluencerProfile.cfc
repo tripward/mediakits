@@ -104,8 +104,9 @@ component
 		cascade="delete"
 		loadkey="influencerProfileid";
 		
-	property name="awards" fieldtype="one-to-many" relatesto="awards" cascade="delete";
-	property name="presslinks" fieldtype="one-to-many" relatesto="presslinks" cascade="delete";
+	property name="awards" singularname="award" fieldtype="one-to-many" relatesto="awards" cascade="delete";
+	property name="presslinks" singularname="presslink" fieldtype="one-to-many" relatesto="presslinks" cascade="delete";
+	property name="conferences" singularname="conference" fieldtype="one-to-many" relatesto="conferences" cascade="delete";
 		
 		
 		

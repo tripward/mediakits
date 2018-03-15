@@ -14,12 +14,7 @@ this is the profile in getprofile
 <div class="row">
 	<div class="col-md-6">
 		<!---<form role="form" method="post">--->
-		<form action="/influencer-login-form/?mediakitsFunctionsaction=influencer:main.persistProfile" role="form" method="post" enctype="multipart/form-data">
-			
-			<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.persistProfile')#" />
-			<input type="hidden" name="influenceraccountid" value="#rc.influencerAccount.getID()#" />
 		
-			<button type="submit" class="btn btn-default" value="Save Registration">Submit</button>
 		
 		
 		<h4>Facebook Info</h4>
@@ -33,11 +28,11 @@ this is the profile in getprofile
 		<cfelse>
 			<div class=""><a href="/infuencer-profile/edit-facebook-connection?influenceraccountid='#session.influencerAccount.getID()#'">Set up Facebook Connection</a></div>
 		</cfif>
-		
+		<!---<cfdump var="#rc.socialStats#" label="cgi" abort="true" top="6" />--->
 		<h4>Instagram Info</h4>
 		<cfif len(trim(rc.influencerAccount.getProfile().getinstagramUserName()))>
 			<div id="instagram" class="form-group">
-				<div id="fdvfdv">Current Followed by Count <span id="instagramCount">#rc.socialStats.instagram.stats.user.followed_by.count#</span></div>
+				<div id="fdvfdv">Current Followed by Count <span id="instagramCount">#rc.socialStats.instagram.stats.graphql.user.edge_followed_by.count#</span></div>
 				<!---<div id="fdvfdv">Current Follows Count <span id="instagramCount">#rc.socialStats.instagram.stats.user.follows.count#</span></div>--->
 				<div class=""><a href="/infuencer-profile/edit-instagram-connection?influenceraccountid='#session.influencerAccount.getID()#'">Edit Instagram Connection</a></div>
 			</div>
@@ -99,35 +94,134 @@ this is the profile in getprofile
 			<cfloop list="#rc.categories#" index="local.myCat" delimiters="^" >
 				<div><input id="categories_#listFirst(local.myCat,'|')#" <cfif listFindNoCase(rc.currentInfluencerCategories,listFirst(local.myCat,'|'))>checked=checked </cfif><!---class="form-control"---> type="checkbox" name="categories" value="#listFirst(local.myCat,'|')#" /> #listLast(local.myCat,'|')#</div>
 			</cfloop>
-			<a href="foo" id='categories_EditLink'>Edit</a>
 			
-			<!---<cfdump var="#rc.influencerAccount.getProfile().getInfluencerProfileToCategories().getArray()#" label="cgi" abort="false" top="3" />--->
+			
+		</div>
+		<!---<cfdump var="#rc.influencerAccount.getProfile().getAwards().getBEANARRAY()#" label="cgi" abort="true" top="3" />--->
+		<h4>Awards</h4>
+		<div id="awards" class="form-group">
+			<cfif rc.influencerAccount.getProfile().getAwards().recordCount()>
+				<cfloop array="#rc.influencerAccount.getProfile().getAwards().getArray()#" index="local.award">
+					<div <div class="" id="">
+						<!---#local.award.getProfileDisplay()#--->
+						<div>#local.award.name# <a href="" id='award_edit_#local.award.awardid#'>Edit</a> <a href="" id='award_delete_#local.award.awardid#'>Delete</a></div>
+						<div>#local.award.PresentedBy# #local.award.PresentedDate#</div>
+						<div>#local.award.Description#</div>
+					</div>
+				</cfloop>
+			<cfelse>
+				<div>No awards added yet</div>
+			</cfif>
+			<div class="">
+			<h3>Add Award</h3>
+			<form action="/influencer-login-form/?mediakitsFunctionsaction=influencer:main.persistAward" role="form" method="post" enctype="multipart/form-data">
+			
+				<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.persistAward')#" />
+				<input type="hidden" name="influenceraccountid" value="#rc.influencerAccount.getID()#" />
+			
+				<label for="name">name</label>
+				<input id="name" class="form-control" type="text" size="40" name="name" value="<cfif structKeyExists(rc,'award')>#rc.award.getName()#</cfif>" />
+				
+				<label for="PresentedDate">Presented Date</label>
+				<input id="PresentedDate" class="form-control" type="text" size="20" name="PresentedDate" value="<cfif structKeyExists(rc,'award')>#rc.award.getPresentedDate()#</cfif>" />
+				
+				<label for="PresentedBy">Presented By</label>
+				<input id="PresentedBy" class="form-control" type="text" size="20" name="PresentedBy" value="<cfif structKeyExists(rc,'award')>#rc.award.getPresentedBy()#</cfif>" />
+				
+				<label for="description">Description</label>
+				<textarea id="description" class="form-control" cols="20" rows="5" name="description"><cfif structKeyExists(rc,'award')>#rc.award.getdescription()#</cfif></textarea>
+		
+			
+				<button type="submit" class="btn btn-default" value="Save Award">Submit</button>
+			
+			</form>
+			</div>
+			
 		</div>
 		
-		<h4>Awards</h4>
-		<a href="foo" id='?addAward#rc.influencerAccount.getProfile().getID()#'>Add</a>
-		<div id="awards" class="form-group">
-			
-			<!---<cfloop array="#rc.influencerAccount.getProfile().getAwards()#" index="local.award">
-				<div>
-					<div class="">local.award.name <a href="foo" id='?editAward#local.award.id#'>Edit</a> <a href="foo" id='?deleteAward#local.award.id#'>Delete</a></div>
-					<div class="">local.award.Description</div>
-				</div>
-			</cfloop>--->
-			
-		</div>
 		<h4>Press Links</h4>
-		<a href="foo" id='?addpresslinks#rc.influencerAccount.getProfile().getID()#'>Add</a>
-		<div id="presslinks" class="form-group">
+		<div id="press_Links" class="form-group">
+			<cfif rc.influencerAccount.getProfile().getPresslinks().recordCount()>
+				<cfloop array="#rc.influencerAccount.getProfile().getPresslinks().getArray()#" index="local.presslink">
+					<div <div class="" id="">
+						<!---#local.presslink.getProfileDisplay()#--->
+						<div>#local.presslink.name# <a href="" id='presslink_edit_#local.presslink.presslinkid#'>Edit</a> <a href="" id='presslink_delete_#local.presslink.presslinkid#'>Delete</a></div>
+						<div>#local.presslink.publication# #local.presslink.DisplayDate#</div>
+						<div>#local.presslink.Description#</div>
+					</div>
+				</cfloop>
+			<cfelse>
+				<div>No Press Links added yet</div>
+			</cfif>
+			<div class="">
+			<h3>Add Press Link</h3>
+			<form action="/influencer-login-form/?mediakitsFunctionsaction=influencer:main.persistPresslink" role="form" method="post" enctype="multipart/form-data">
 			
-			<!---<cfloop array="#rc.influencerAccount.getProfile().getAwards()#" index="local.award">
-				<div>
-					<div class="">local.award.name <a href="foo" id='?editAward#local.award.id#'>Edit</a> <a href="foo" id='?deleteAward#local.award.id#'>Delete</a></div>
-					<div class="">local.award.Description</div>
-				</div>
-			</cfloop>--->
+				<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.persistPresslink')#" />
+				<input type="hidden" name="influenceraccountid" value="#rc.influencerAccount.getID()#" />
+			
+				<label for="name">name</label>
+				<input id="name" class="form-control" type="text" size="40" name="name" value="<cfif structKeyExists(rc,'presslink')>#rc.presslink.getName()#</cfif>" />
+				
+				<label for="DisplayDate">Display Date</label>
+				<input id="DisplayDate" class="form-control" type="text" size="20" name="DisplayDate" value="<cfif structKeyExists(rc,'presslink')>#rc.presslink.getDisplayDate()#</cfif>" />
+				
+				<label for="publication">Publication</label>
+				<input id="publication" class="form-control" type="text" size="20" name="publication" value="<cfif structKeyExists(rc,'presslink')>#rc.presslink.getpublication()#</cfif>" />
+				
+				<label for="description">Description</label>
+				<textarea id="description" class="form-control" cols="20" rows="5" name="description"><cfif structKeyExists(rc,'presslink')>#rc.presslink.getdescription()#</cfif></textarea>
+		
+			
+				<button type="submit" class="btn btn-default" value="Save Presslink">Submit</button>
+			
+			</form>
+			</div>
 			
 		</div>
+		<!---<cfdump var="#rc.influencerAccount.getProfile().getconferences().getArray()#" label="cgi" abort="true" top="3" />--->
+		<h4>Conferences</h4>
+		<div id="conference_block" class="form-group">
+			<cfif rc.influencerAccount.getProfile().getconferences().recordCount()>
+				<cfloop array="#rc.influencerAccount.getProfile().getconferences().getArray()#" index="local.conference">
+					<div <div class="" id="">
+						<!---#local.conference.getProfileDisplay()#--->
+						<div>#local.conference.name# <a href="" id='conference_edit_#local.conference.conferenceid#'>Edit</a> <a href="" id='conference_delete_#local.conference.conferenceid#'>Delete</a></div>
+						<div>#local.conference.Date#</div>
+						<div>#local.conference.Description#</div>
+					</div>
+				</cfloop>
+			<cfelse>
+				<div>No Conferences added yet</div>
+			</cfif>
+			<div class="">
+			<h3>Add Conference</h3>
+			<form action="/influencer-login-form/?mediakitsFunctionsaction=influencer:main.persistconference" role="form" method="post" enctype="multipart/form-data">
+			
+				<input type="hidden" name="#variables.framework.action#" value="#getFullyQualifiedAction('influencer:main.persistconference')#" />
+				<input type="hidden" name="influenceraccountid" value="#rc.influencerAccount.getID()#" />
+			
+				<label for="name">name</label>
+				<input id="name" class="form-control" type="text" size="40" name="name" value="<cfif structKeyExists(rc,'conference')>#rc.conference.getName()#</cfif>" />
+				
+				<label for="date">Date</label>
+				<input id="date" class="form-control" type="text" size="20" name="Date" value="<cfif structKeyExists(rc,'conference')>#rc.conference.getDate()#</cfif>" />
+				
+				<label for="description">Description</label>
+				<textarea id="description" class="form-control" cols="20" rows="5" name="description"><cfif structKeyExists(rc,'conference')>#rc.conference.getdescription()#</cfif></textarea>
+		
+			
+				<button type="submit" class="btn btn-default" value="Save conference">Submit</button>
+			
+			</form>
+			</div>
+			
+		</div>
+		
+		
+		
+		
+		
 		
 		<h4>Media Template</h4>
 		<div id="general" class="form-group">

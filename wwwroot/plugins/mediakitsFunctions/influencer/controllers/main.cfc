@@ -10,6 +10,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 component persistent="false" accessors="true" output="false" extends="plugins.mediakitsFunctions.common.controllers.basecontroller" displayname="InfluencerMainController" {
 
 	property InfluencerStatsService;
+	property InfluencerAwardsService;
 
 	public void function before(required struct rc) {
 		SUPER.before(rc);
@@ -282,6 +283,76 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			session.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
 		}
 		variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+
+	}
+	
+	public void function persistAward(required struct rc) {
+
+		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		
+		rc.award = getBean('award').populateFromForm(rc);
+
+		if (!structIsEmpty(rc.award.validate())) {
+			rc.errors = rc.award.validate();
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		} else {
+			/*WriteDump(var=request,top=2,label='goo', abort=true);*/
+			/*rc.influencerAccount.getProfile().getAward*/
+			
+			/*rc.influencerAccount.getProfile().addAward(rc.award);
+			rc.influencerAccount.getProfile().save();*/
+			/*WriteDump(var=rc.influencerAccount.getProfile().getAwards().getArray(),top=3,label='goo', abort=true);*/
+			/*rc.award.setInfluencerProfile(rc.influencerAccount.getProfile());*/
+			rc.award.setInfluencerProfileID(rc.influencerAccount.getProfile().getID());
+			
+			rc.award.save();
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='none', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		}
+
+
+	}
+	
+	public void function persistPresslink(required struct rc) {
+
+		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		
+		rc.Presslink = getBean('Presslink').populateFromForm(rc);
+
+		if (!structIsEmpty(rc.Presslink.validate())) {
+			rc.errors = rc.Presslink.validate();
+			WriteDump(var=rc.errors,top=2,label='goo', abort=true);
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		} else {
+			
+			rc.Presslink.setInfluencerProfileID(rc.influencerAccount.getProfile().getID());
+			
+			rc.Presslink.save();
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='none', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		}
+
+
+	}
+	public void function persistConference(required struct rc) {
+
+		rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
+		
+		rc.Conference = getBean('Conference').populateFromForm(rc);
+
+		if (!structIsEmpty(rc.Conference.validate())) {
+			rc.errors = rc.Conference.validate();
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		} else {
+			rc.Conference.setInfluencerProfileID(rc.influencerAccount.getProfile().getID());
+			rc.Conference.save();
+			variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='none', queryString='influenceraccountid=#session.influencerAccount.getID()#');/*,preserve='ALL'*/
+			abort;
+		}
+
 
 	}
 	
