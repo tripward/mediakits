@@ -88,7 +88,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch pintrestsetupservice', abort=true);
 		} 
 
 	}
@@ -122,7 +122,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 	
 			q.execute();*/
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch pintrestsetupservice', abort=true);
 		} 
 
 	}

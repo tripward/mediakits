@@ -20,7 +20,7 @@ this is the profile in getprofile
 		<h4>Facebook Info</h4>
 		<cfif len(trim(rc.influencerAccount.getProfile().getfacebookID()))>
 			<div id="facebook" class="form-group">
-				<div id="fdvfdv">Current Friend Count <span id="fbFriendCount"></span></div>
+				<div id="fdvfdv">Current Friend Count <span id="fbFriendCount">2</span></div>
 				<!---<label for="facebookBusinesspageLink">Business Link</label>
 				<input id="facebookBusinesspageLink" class="form-control" type="text" size="80" name="facebookBusinesspageLink" value="#rc.influencerAccount.getProfile().getfacebookBusinesspageLink()#" />--->
 				<div class=""><a href="/infuencer-profile/edit-facebook-connection?influenceraccountid='#session.influencerAccount.getID()#'">Edit Facebook Connection</a></div>
@@ -54,7 +54,7 @@ this is the profile in getprofile
 		<h4>Pintrest Info</h4>
 		<cfif len(trim(rc.influencerAccount.getProfile().getPintrestUserName()))>
 			<div id="pintrest" class="form-group">
-				<div id="fdvfdv">Pintest Followers <span id="pintrestFollowerCount"></span></div>
+				<div id="fdvfdv">Pintest Followers <span id="pintrestFollowerCount">#rc.socialStats.pintrest.stats.PINTRESTBOARDCOUNT# with #rc.socialStats.pintrest.stats.PINTRESTFOLLOWERCOUNT# followers.</span></div>
 			</div>
 			<div class=""><a href="/infuencer-profile/edit-pintrest-connection?influenceraccountid=#session.influencerAccount.getID()#">Edit Pintrest Connection</a></div>
 		<cfelse>

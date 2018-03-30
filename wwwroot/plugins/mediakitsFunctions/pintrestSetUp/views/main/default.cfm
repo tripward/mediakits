@@ -21,13 +21,16 @@
 	
 	<div id="pintrest" class="form-group">
 		<h4>Step 1</h4>
-		<label for="pintrestUserName">pintrest Username</label>
+		<label for="pintrestUserName">Pintrest Username</label>
 		<input id="pintrestUserName" class="form-control" type="text" size="20" name="pintrestUserName" value="#rc.influencerAccount.getProfile().getpintrestUserName()#" />
 		
-		<h4>Step 2</h4>
-		<p onclick="pintresttest()">Click me</p>
+		<div>
+			<p>You can find your pintrest username . . . .</p>
+		</div>
+		<!---<h4>Step 2</h4>
+		<div onclick="login();">Click me</div>--->
 		
-		<h4>Step 3</h4>
+		<h4>Step 2</h4>
 		<button  class="btn btn-default" value="do login" type="submit" >Submit</button>
 		
 	</div>

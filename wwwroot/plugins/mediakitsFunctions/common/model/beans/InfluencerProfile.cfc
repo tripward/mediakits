@@ -13,16 +13,15 @@ component
 		property name="keywords" datatype="varchar" length="255" default="";
 		property name="description" datatype="varchar" length="1000" default="";
 		
-		
+		property name="lastStatUdate" datatype="datetime";
 		
 		property name="twitterUserName" datatype="varchar" length="50" default="";
 		property name="twitterPassword" datatype="varchar" length="50" default="";
 		property name="twitterResponse" datatype="varchar" length="3000" default="";
+		property name="twitterResponseDate" datatype="dateTime";
 		property name="twitterFollowedByCount" type="integer" datatype="integer" length="10" default="0";
 		property name="twitterFollowingCount" type="integer" datatype="integer" length="10" default="0";
 		property name="twitterLastUpdate" datatype="dateTime";
-		
-		
 		
 		property name="instagramUserName" datatype="varchar" length="50" default="";
 		property name="instagramPassword" datatype="varchar" length="50" default="";
@@ -176,7 +175,10 @@ component
 			}
 			
 			if (structKeyExists(arguments.submittedForm, 'pintrestUserName')) {
+				
 				this.setpintrestUserName(arguments.submittedForm.pintrestUserName);
+				/*WriteDump(var=this.,top=2,label='goo', abort=true);*/
+				
 			}
 
 			if (structKeyExists(arguments.submittedForm, 'pintrestPassword')) {

@@ -17,7 +17,7 @@ include '../../config.fw1.cfm';
 	WriteDump($);
 	WriteDump(arguments);abort;}
 catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='objectParams service', abort=true);
 		} */
 WriteOutput( CreateObject( "#variables.framework.package#.Application" ).init( variables.framework ).doAction( 'FacebookSetup:main.default' ) );
 </cfscript>

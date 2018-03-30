@@ -42,7 +42,7 @@ WriteDump(var=arguments.account.getProfile().gettwitterUserName(),top=2,label='g
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch instagramservice', abort=true);
 		} 
 
 	}

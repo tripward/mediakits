@@ -55,7 +55,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch twittersetupservice', abort=true);
 		} 
 
 	}
@@ -72,7 +72,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch twittersetupservice', abort=true);
 		} 
 
 	}

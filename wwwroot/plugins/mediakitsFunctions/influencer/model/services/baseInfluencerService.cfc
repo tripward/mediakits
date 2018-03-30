@@ -19,7 +19,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			variables.myIterator = variables.getFeed('#variables.ObjectType#').where().getIterator();
 		}} catch (any e) {
 			WriteDump('error in iterator for #variables.ObjectType#');
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch baseinfservice', abort=true);
 		} 
 		return variables.myIterator;
 	}
@@ -30,7 +30,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			variables.myIterator = variables.getFeed('#variables.ObjectType#').where().getIterator();
 		}} catch (any e) {
 			WriteDump('error in iterator for #variables.ObjectType#');
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch baseinfservice', abort=true);
 		} 
 		return variables.myIterator;
 	}

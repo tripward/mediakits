@@ -81,7 +81,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch fbsetservice', abort=true);
 		} 
 
 	}
@@ -115,7 +115,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 	
 			q.execute();*/
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch bbsetupervice', abort=true);
 		} 
 
 	}
@@ -136,7 +136,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 		var theToken = arguments.account.getProfile().getfacebookLongLivedAccessToken();
 		/*WriteDump(var=theToken,top=2,label='goo', abort=true);*/
 		cfhttp(url="https://graph.facebook.com/v2.1/#arguments.account.getProfile().getFacebookID()#/friends?access_token=#theToken#&client_id=2017613635228214&client_secret=dd9ce81152598daed05ea7bbc1209a1e" ,result="local.callResponse");
-		WriteDump(var=local.callResponse,top=2,label='goo', abort=true);
+		
 		return local.callResponse;
 	}
 	

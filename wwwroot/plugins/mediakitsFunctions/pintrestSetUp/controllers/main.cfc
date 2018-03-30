@@ -26,41 +26,24 @@
 	</cfscript>
 	
 	
-	<cffunction name="persistSetup" >
-	<cfdump var="#rc#" label="cgi" abort="true" top="3" />
+	<cffunction name="persist" >
+	
+	
 		<cfscript>
-			var myResult = "";
 			rc.influencerAccount = getBean('InfluencerAccount').loadBy(influenceraccountid=rc.influenceraccountid);
 		</cfscript>
 		
-		 <!---https://www.facebook.com/dialog/oauth?client_id=2017613635228214&redirect_uri=http://mediakits.loc/infuencer-profile/edit-facebook-connection/?influenceraccountid=%27C5785E75-8002-7D59-D5A99B33670A71CA%27&trip=true&scope=public_profile,email&state=fb&response_type=code--->
-		 
-		<!--- <cfhttp url="graph.facebook.com/?ids=platform,me" method="get" result="myResult">--->
-		
-		<cflogin>
-		<cfoauth
-			type="Facebook"
-			clientID = "2017613635228214"
-			secretkey = "dd9ce81152598daed05ea7bbc1209a1e"
-			result = "myResult"
-			state="fb"
-			scope="public_profile,email"
-			redirecturi="http://mediakits.loc/infuencer-profile/edit-facebook-connection/?influenceraccountid=#rc.influenceraccountid#&trip=true">
-
-			/*#res.other.username#*/
-			<cfloginuser name="king@werwards.com" password="#myResult.access_token#" roles="user"/>
-		</cflogin>
-		<!---<cflocation url="http://localhost:8500/doc/index.cfm">--->
-		
-		
-		
-		<cfscript>
-			session.fbinfo = myResult;
-		</cfscript>
-		
-		<cfdump var="#myResult#" label="cgi" abort="false" top="3" />
-		<cfdump var="#session#" label="cgi" abort="true" top="3" />
-		
+		<cfif !structKeyExists(rc,'pintrestUsername') OR !len(trim(rc.pintrestUsername))>
+			
+		<cfelse>
+			<cfset rc.profile = rc.influencerAccount.getProfile().populateFromForm(rc) />
+			<!---<cfset rc.influencerAccount.getProfile().setpintrestUsername('#rc.pintrestUsername#') />--->
+			<!---<cfset rc.profile = rc.influencerAccount.getProfile() />--->
+			<!---<cfdump var="#rc.profile#" label="cgi" abort="true" top="3" />--->
+			<cfset rc.profile.save() />
+			<!---<cfdump var="#rc.pintrestusername#" label="cgi" abort="true" top="3" />--->
+			<cfset variables.fw.redirect(path='/infuencer-profile/', action='influencer:main.getProfile', preserve='ALL', queryString='influenceraccountid=#session.influencerAccount.getID()#') >
+		</cfif>
 		
 	</cffunction>
 	

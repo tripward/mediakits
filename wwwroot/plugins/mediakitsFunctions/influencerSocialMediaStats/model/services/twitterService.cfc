@@ -20,6 +20,14 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 		var twitterStats = {};
 		twitterstats.fullcallResponse = variables.getGeneralInfoFeed(arguments.account);
 		
+		if (twitterstats.fullcallResponse.statusCode IS '200 OK') {        
+			variables.persistResponse(influenceraccountid=arguments.account.getID(), pull=twitterstats.fullcallResponse.fileContent);
+		}
+		else {
+			WriteOutput("twitter call failed");
+			WriteDump(var=twitterstats.fullcallResponse,top=2,label='twitterstats.fullcallResponse', abort=true);
+		}
+		
 		twitterstats.rawFileContent = deserializeJSON(twitterstats.fullcallResponse.filecontent);
 		twitterstats.asStruct = twitterstats.rawFileContent[1];
 		
@@ -67,7 +75,7 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch twitterservice', abort=true);
 		} 
 
 	}
@@ -84,7 +92,24 @@ component persistent="false" accessors="true" output="false" extends="plugins.me
 			
 			
 		} catch (any e) {
-			WriteDump(e);abort;
+			WriteDump(var=e,top=3,label='error catch twitterservice', abort=true);
+		} 
+
+	}
+	
+	public void function persistResponse(required string influenceraccountid='', required string twitterResponse='') {
+
+		try {
+			
+			/*WriteDump(var=#dbDateDateTime(now())#,top=2,label='goo', abort=true);*/
+			QueryExecute("UPDATE custom_influencerprofiles SET twitterResponse = ( :twitterResponse ), twitterResponseDate=#createODBCDate(now())# WHERE ( influenceraccountid = :influenceraccountid )",
+			 {twitterResponse={value='#arguments.twitterResponse#', CFSQLType='cf_sql_char'}, influenceraccountid={value='#arguments.influenceraccountid#', CFSQLType='cf_sql_char'}});
+			
+			
+			
+			
+		} catch (any e) {
+			WriteDump(var=e,top=3,label='error catch twitterservice', abort=true);
 		} 
 
 	}

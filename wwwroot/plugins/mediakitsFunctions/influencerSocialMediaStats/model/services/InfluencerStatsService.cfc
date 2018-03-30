@@ -20,7 +20,7 @@ component displayname="InfluencerStatsService" persistent="false" extends="plugi
 		SUPER.init();
 		
 		
-		/*variables.twitterService = application.serviceFactory.getBean('twitterService');*/
+		variables.pintrestService = application.serviceFactory.getBean('pintrestService');
 		
 		/*writeDump( application.serviceFactory.getBeanInfo() );        
              abort;*/
@@ -33,6 +33,8 @@ component displayname="InfluencerStatsService" persistent="false" extends="plugi
 		
 		if (len(trim(arguments.account.getProfile().getTwitterUserName()))){
 			local.socialMediaStats.twitter.stats = variables.twitterService.getStats(arguments.account);
+		/*	WriteDump(var=arguments.account.getID(),top=2,label='goo', abort=true);*/
+			
 		}
 		
 		
@@ -46,9 +48,9 @@ component displayname="InfluencerStatsService" persistent="false" extends="plugi
 			
 		}
 		
-		/*if (len(trim(arguments.influencerProfile.getpintrestUserName()))){
-			local.socialMediaStats.pintrest.stats = variables.pintrestService.getStats(arguments.influencerProfile);
-		}*/
+		if (len(trim(arguments.account.getProfile().getPintrestUserName()))){
+			local.socialMediaStats.pintrest.stats = variables.pintrestService.getStats(arguments.account);
+		}
 		
 		
 		/*WriteDump(var=local.socialMediaStats,top=5,label='googggg', abort=true);*/
